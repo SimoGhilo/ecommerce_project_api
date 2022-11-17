@@ -8,7 +8,7 @@ const getCustomers = (req, res) => {
 
 }
 
-const getStudentById = (req, res) => {
+const getCustomerById = (req, res) => {
     const id = parseInt(req.params.id);
     pool.query(`select * from students where id=${(id).toString()}`, (err, result) => {
         if (err) throw err;
@@ -19,5 +19,5 @@ const getStudentById = (req, res) => {
 
 
 module.exports = {
-    getCustomers, getStudentById
+    getCustomers, getCustomerById
 }

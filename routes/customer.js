@@ -29,7 +29,9 @@ customerRouter.get('/',
     controller.getCustomers)
 
 /// get a customer by id 
-customerRouter.get('/:id', controller.getStudentById);
+customerRouter.get('/:id', controller.getCustomerById);
+
+customerRouter.delete('/:id', controller.getCustomerById);
 
 // update a  customer   / Not working properly
 // look up the customer, if not found return 404, else update the customer and return the updated customer
