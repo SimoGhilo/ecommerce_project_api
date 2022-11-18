@@ -1,5 +1,6 @@
+
 const { Pool } = require('pg');
-const PORT = 3000;
+const PORT = 5432;
 
 const pool = new Pool({
     host: 'localhost',

@@ -1,19 +1,29 @@
 const pool = require('./database');
 
-const getCustomers = (req, res) => {
-    pool.query('select * from customers', (err, result) => {
-        if (err) throw err;
-        res.status(200).json(result.rows);
-    });
+const getCustomers = async (req, res) => {
+    try {
+        await pool.query('select * from customers', (err, result) => {
+            res.status(200).json(result.rows);
+        });
+    } catch (err) {
+        console.log(err.message);
+    }
+
 
 }
 
-const getCustomerById = (req, res) => {
+const getCustomerById = async (req, res) => {
     const id = parseInt(req.params.id);
-    pool.query(`select * from customers where id=${id.toString()}`, (err, result) => {
-        if (err) throw err;
-        res.status(200).json(result.rows);
-    })
+    try {
+        await pool.query(`select * from customers where id=${id.toString()}`, (err, result) => {
+            res.status(200).json(result.rows)
+        });
+    } catch (err) {
+        console.log(err.message);
+    }
+
+
+
 }
 
 
@@ -38,6 +48,7 @@ const updateCustomerById = (req, res) => {
     const { name } = req.body;
     const { address } = req.body;
     const { email } = req.body;
+    const { password } = req.body;
 
     pool.query(`select * from customers where id=${id.toString()}`, (err, result) => {
         const notFound = !result.rows.length;
@@ -46,10 +57,14 @@ const updateCustomerById = (req, res) => {
         }
 
 
-
-        pool.query(`update customers set name=${name}, address=${address},email=${email} where id=${id}}`,
+        const updateQueryString = `update customers set customer_name='${name}', address='${address}',email='${email}',customer_password='${password}' where id='${id}';`;
+        console.log(updateQueryString);
+        pool.query(updateQueryString,
             (err, result) => {
-                if (err) throw err;
+                if (err) {
+                    console.log(err);
+                    throw err;
+                }
                 res.status(200).send('Student updated successfully');
             });
     })
