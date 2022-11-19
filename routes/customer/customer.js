@@ -2,7 +2,7 @@
 
 const express = require('express');
 const customerRouter = express.Router();
-const controller = require('../controller');
+const controller = require('./controller');
 
 // get all customers - Test
 customerRouter.get('/',

@@ -21,8 +21,17 @@ app.use(cors());
 //const apiRouter = require('./routes/api');
 //app.use('/api', apiRouter)
 
-const customerRouter = require('./routes/customer');
+const customerRouter = require('./routes/customer/customer');
 app.use('/customers', customerRouter)
+
+const productRouter = require('./routes/product/product');
+app.use('/products', productRouter)
+
+const cartRouter = require('./routes/cart/cart');
+app.use('/carts', cartRouter);
+
+const orderRouter = require('./routes/order/order');
+app.use('/orders', orderRouter);
 
 
 app.listen(PORT, (error) => {

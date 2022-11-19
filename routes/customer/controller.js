@@ -1,4 +1,4 @@
-const pool = require('./database');
+const pool = require('../../database');
 
 const getCustomers = async (req, res) => {
     try {
@@ -26,6 +26,7 @@ const getCustomerById = async (req, res) => {
 
 }
 
+//// Difference between async and normal function?
 
 const deleteCustomerById = (req, res) => {
     const id = parseInt(req.params.id);
@@ -38,7 +39,7 @@ const deleteCustomerById = (req, res) => {
 
         pool.query(`delete from customers where id=${id.toString()}`, (err, result) => {
             if (err) throw err;
-            res.status(200).send('Student removed successfully');
+            res.status(200).send('customer removed successfully');
         });
     })
 }
@@ -65,7 +66,7 @@ const updateCustomerById = (req, res) => {
                     console.log(err);
                     throw err;
                 }
-                res.status(200).send('Student updated successfully');
+                res.status(200).send('customer updated successfully');
             });
     })
 }
