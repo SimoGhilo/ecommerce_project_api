@@ -8,6 +8,9 @@ const controller = require('./controller');
 customerRouter.get('/',
     controller.getCustomers)
 
+// create a new customer
+customerRouter.post('/', controller.createCustomer);
+
 /// get a customer by id 
 customerRouter.get('/:id', controller.getCustomerById);
 

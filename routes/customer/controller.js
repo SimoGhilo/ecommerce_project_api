@@ -12,10 +12,27 @@ const getCustomers = async (req, res) => {
 
 }
 
+const createCustomer = (req, res) => {
+    const { customer_id } = req.body
+    const { customer_name } = req.body
+    const { address } = req.body
+    const { email } = req.body
+    const { customer_password } = req.body
+    try {
+        pool.query(`insert into customers (customer_id,customer_name,address,email,customer_password) 
+        values (${customer_id},'${customer_name}','${address}','${email}','${customer_password}')`, (err, result) => {
+            res.status(200).json(result.rows)
+        });
+    } catch (err) {
+        console.log(err.message);
+    }
+
+};
+
 const getCustomerById = async (req, res) => {
     const id = parseInt(req.params.id);
     try {
-        await pool.query(`select * from customers where id=${id.toString()}`, (err, result) => {
+        await pool.query(`select * from customers where customer_id=${id.toString()}`, (err, result) => {
             res.status(200).json(result.rows)
         });
     } catch (err) {
@@ -31,13 +48,13 @@ const getCustomerById = async (req, res) => {
 const deleteCustomerById = (req, res) => {
     const id = parseInt(req.params.id);
 
-    pool.query(`select * from customers where id=${id.toString()}`, (err, result) => {
+    pool.query(`select * from customers where customer_id=${id.toString()}`, (err, result) => {
         const notFound = !result.rows.length;
         if (notFound) {
             res.send('Customer does not exist in the database');
         }
 
-        pool.query(`delete from customers where id=${id.toString()}`, (err, result) => {
+        pool.query(`delete from customers where customer_id=${id.toString()}`, (err, result) => {
             if (err) throw err;
             res.status(200).send('customer removed successfully');
         });
@@ -51,7 +68,7 @@ const updateCustomerById = (req, res) => {
     const { email } = req.body;
     const { password } = req.body;
 
-    pool.query(`select * from customers where id=${id.toString()}`, (err, result) => {
+    pool.query(`select * from customers where customer_id=${id.toString()}`, (err, result) => {
         const notFound = !result.rows.length;
         if (notFound) {
             res.send('Customer does not exist in the database');
@@ -73,5 +90,5 @@ const updateCustomerById = (req, res) => {
 
 
 module.exports = {
-    getCustomers, getCustomerById, deleteCustomerById, updateCustomerById
+    getCustomers, getCustomerById, deleteCustomerById, updateCustomerById, createCustomer
 }

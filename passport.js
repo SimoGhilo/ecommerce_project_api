@@ -1,31 +1,56 @@
-/*const passport = require('passport');
+const passport = require('passport');
 const bcrypt = require('bcrypt');
 const localStartegy = require('passport-local').Strategy;
 
+
+
 function initialize(passport, getCustomerByEmail) {
 
-    /// Log in customer
+    //authenticateCustomer
     async function authenticateCustomer(email, password, done) {
-        const customer = getCustomerByEmail(email)
+
+        const customer = getCustomerByEmail(email)  // I will create this function later
         if (customer == null) {
-            return done(null, false, { messagge: 'No customer found with email ' + email })
+            return done(null, false, { message: 'No customer found wuth that email' });
         }
         try {
+
             if (await bcrypt.compare(password, customer.password)) {
+
                 return done(null, customer);
+
             } else {
-                return done(null, false, { messagge: 'password does not match' });
+
+                return done(null, false, { message: 'password incorrect' });
             }
-        } catch (e) {
-            return done(e, false, { messagge: 'error occurred while verifying' });
+
+        } catch (err) {
+
+            done(err);
+
         }
 
+
     }
+    //localStartegy
+    passport.use(new localStartegy({ usernameField: 'email' }), authenticateCustomer);
+
+    //Serialization and deserialization
+
+    passport.serializeUser((user, done) => { });
+    passport.deserializeUser((id, done) => { });
 }
 
+module.exports = initialize;
 
-passport.use(new localStartegy({ usernameField: 'customer' }), authenticateCustomer);
-passport.serializeUser((user, done) => { });
-passport.deserializeUser((id, done) => { })
 
-module.exports = initialize;*/
+
+
+
+
+
+
+
+
+
+module.exports = initialize;
