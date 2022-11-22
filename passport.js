@@ -1,56 +1,63 @@
 const passport = require('passport');
 const bcrypt = require('bcrypt');
 const localStartegy = require('passport-local').Strategy;
+const { pool } = require('./database');
 
 
+function initialize(passport) {
 
-function initialize(passport, getCustomerByEmail) {
+    const authenticateCustomer = (email, customer_password, done) => {
+        pool.query(`select * from customers where email='${email}'`, (err, result) => {
+            if (err) {
+                throw err
 
-    //authenticateCustomer
-    async function authenticateCustomer(email, password, done) {
+            }
 
-        const customer = getCustomerByEmail(email)  // I will create this function later
-        if (customer == null) {
-            return done(null, false, { message: 'No customer found wuth that email' });
-        }
-        try {
+            // if there is a customer
 
-            if (await bcrypt.compare(password, customer.password)) {
+            if (result.rows.length > 0) {
+                const customer = result.rows[0];
+                bcrypt.compare(customer_password, customer.password, (error, isMatch) => {
 
-                return done(null, customer);
+                    if (err) throw err
+
+                    if (isMatch) {
+
+                        return done(null, customer)
+
+                    } else {
+
+                        return done(null, false, { message: 'incorrect password' })
+
+                    }
+                });
+
+                //if there are no customers   *******
 
             } else {
 
-                return done(null, false, { message: 'password incorrect' });
+                return done(null, false, { message: 'email not registered' });
+
             }
+        })
+    };
 
-        } catch (err) {
+    passport.use(new localStartegy({
+        usernameField: "email",
+        passwordField: "password",
+    }, authenticateCustomer));
 
-            done(err);
+    passport.serializeUser((customer_id, done) => {
+        done(null, customer_id)
+    });
 
-        }
+    passport.deserializeUser((customer_id, done) => {
+        pool.query(`select * from customer where customer_id=${customer_id}`, (err, result) => {
+            if (err) throw err
+            return done(null, result.rows[0]);
+        })
+    })
 
-
-    }
-    //localStartegy
-    passport.use(new localStartegy({ usernameField: 'email' }), authenticateCustomer);
-
-    //Serialization and deserialization
-
-    passport.serializeUser((user, done) => { });
-    passport.deserializeUser((id, done) => { });
 }
-
-module.exports = initialize;
-
-
-
-
-
-
-
-
-
-
 
 module.exports = initialize;
