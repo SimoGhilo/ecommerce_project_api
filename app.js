@@ -6,7 +6,8 @@ const passport = require('passport');
 
 const initializePassport = require('./passport');
 
-initializePassport(passport);
+initializePassport(passport);  // Do i need to pass down the parameters to authenticateCustomer ?
+/// Do i need to query the database ?
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -69,11 +70,17 @@ app.get('/register', authenticator, (req, res) => {
     res.render('register.ejs');
 });
 
+/// checkout
+app.get('/carts/:id/checkout', (req, res) => {
+    res.render('checkout.ejs');
+})
+
+
 // register and login a customer
 
 app.post('/register', async (req, res) => {
 
-    let { customer_name, email, password } = req.body;
+    let { customer_name, email, address, password } = req.body;
 
 
 
@@ -106,8 +113,8 @@ app.post('/register', async (req, res) => {
                 res.render('register.ejs', { errors })
 
             } else {
-                pool.query(`insert into customers (customer_name,email,customer_password) 
-                values ('${customer_name}','${email}','${hashedPassword}')`, (err, result) => {
+                pool.query(`insert into customers (customer_name,address,email,customer_password) 
+                values ('${customer_name}','${address}','${email}','${hashedPassword}')`, (err, result) => {
                     if (err) throw err
                     console.log(result.rows)
                     res.redirect('/login');
@@ -117,6 +124,27 @@ app.post('/register', async (req, res) => {
 
     }
 
+});
+
+// Handling checkout 
+
+app.post('carts/:id/checkout', (req, res) => {
+
+    let { id } = req.params;
+    let { product_id, quantity } = req.body;
+
+    pool.query(`select * from cart where id=${id.toString()}`, (err, result) => {
+        if (err) throw err
+        let cart = result.rows;
+        console.log(cart)
+
+        if (cart.length > 0) {
+            res.send(cart)
+        } else {
+            res.send(`Cart is empty`);
+        }
+
+    })
 });
 
 

@@ -1,12 +1,13 @@
 const passport = require('passport');
 const bcrypt = require('bcrypt');
 const localStartegy = require('passport-local').Strategy;
-const { pool } = require('./database');
+const pool = require('./database');
 
 
 function initialize(passport) {
 
     const authenticateCustomer = (email, customer_password, done) => {
+        //console.log(pool);
         pool.query(`select * from customers where email='${email}'`, (err, result) => {
             if (err) {
                 throw err
@@ -17,10 +18,11 @@ function initialize(passport) {
 
             if (result.rows.length > 0) {
                 const customer = result.rows[0];
-                bcrypt.compare(customer_password, customer.password, (error, isMatch) => {
+                console.log(customer_password, customer.customer_password);
+                bcrypt.compare(customer_password, customer.customer_password, (error, isMatch) => {
 
-                    if (err) throw err
-
+                    if (error) throw error
+                    console.log(isMatch)
                     if (isMatch) {
 
                         return done(null, customer)
@@ -51,8 +53,10 @@ function initialize(passport) {
         done(null, customer_id)
     });
 
-    passport.deserializeUser((customer_id, done) => {
-        pool.query(`select * from customer where customer_id=${customer_id}`, (err, result) => {
+    passport.deserializeUser((customer, done) => {
+        let query = `select * from customers where customer_id=${customer.customer_id}`
+        console.log(query);
+        pool.query(query, (err, result) => {
             if (err) throw err
             return done(null, result.rows[0]);
         })
