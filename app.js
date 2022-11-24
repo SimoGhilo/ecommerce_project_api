@@ -131,18 +131,39 @@ app.post('/register', async (req, res) => {
 app.post('carts/:id/checkout', (req, res) => {
 
     let { id } = req.params;
-    let { product_id, quantity } = req.body;
+    // let { product_id, quantity } = req.body;
+    // console.log(product_id, quantity);
 
-    pool.query(`select * from cart where id=${id.toString()}`, (err, result) => {
+    pool.query(`select * from cart where cart_id=${id.toString()}`, (err, result) => {
         if (err) throw err
         let cart = result.rows;
         console.log(cart)
 
+        // if ther is a cart
         if (cart.length > 0) {
-            res.send(cart)
+
+            pool.query(`insert into orders(order_status,cart_id) values('completed','${id.toString()}')`, (err, result) => {
+                if (err) throw err
+
+                res.status(200).send(result.rows);
+
+                // if cart is checked out
+
+                if (result.rows) {
+                    pool.query(`delete from cart where cart_id=${id.toString()}`, (err, result) => {
+                        if (err) throw err
+                        res.status(200).send(result.rows);
+                    });
+                }
+            })
+            // if cart not found
         } else {
-            res.send(`Cart is empty`);
+
+            res.status(400).send('Cart not found')
+
         }
+
+
 
     })
 });

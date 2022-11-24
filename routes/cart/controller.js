@@ -15,7 +15,7 @@ const getCarts = async (req, res) => {
 const getCartById = async (req, res) => {
     const id = parseInt(req.params.id);
     try {
-        await pool.query(`select * from cart where id=${id.toString()}`, (err, result) => {
+        await pool.query(`select * from cart where cart_id=${id.toString()}`, (err, result) => {
             res.status(200).json(result.rows)
         });
     } catch (err) {
@@ -31,7 +31,7 @@ const createCart = (req, res) => {
     const { product_id } = req.body
     const { quantity } = req.body
     try {
-        pool.query(`insert into cart (id,product_id,quantity) values (${id},${product_id},${quantity})`, (err, result) => {
+        pool.query(`insert into cart (cart_id,product_id,quantity) values (${id},${product_id},${quantity})`, (err, result) => {
             res.status(200).json(result.rows)
         });
     } catch (err) {
@@ -45,13 +45,13 @@ const createCart = (req, res) => {
 const deleteCartById = (req, res) => {
     const id = parseInt(req.params.id);
 
-    pool.query(`select * from cart where id=${id.toString()}`, (err, result) => {
+    pool.query(`select * from cart where cart_id=${id.toString()}`, (err, result) => {
         const notFound = !result.rows.length;
         if (notFound) {
             res.send('cart does not exist in the database');
         }
 
-        pool.query(`delete from cart where id=${id.toString()}`, (err, result) => {
+        pool.query(`delete from cart where cart_id=${id.toString()}`, (err, result) => {
             if (err) throw err;
             res.status(200).send('cart removed successfully');
         });
@@ -63,14 +63,14 @@ const updateCartById = (req, res) => {
     const { product_id } = req.body;
     const { quantity } = req.body;
 
-    pool.query(`select * from cart where id=${id.toString()}`, (err, result) => {
+    pool.query(`select * from cart where cart_id=${id.toString()}`, (err, result) => {
         const notFound = !result.rows.length;
         if (notFound) {
             res.send('cart does not exist in the database');
         }
 
 
-        const updateQueryString = `update cart set product_id='${product_id}', quantity='${quantity}' where id='${id}';`;
+        const updateQueryString = `update cart set product_id='${product_id}', quantity='${quantity}' where cart_id='${id}';`;
         pool.query(updateQueryString,
             (err, result) => {
                 if (err) {
