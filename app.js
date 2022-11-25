@@ -6,8 +6,7 @@ const passport = require('passport');
 
 const initializePassport = require('./passport');
 
-initializePassport(passport);  // Do i need to pass down the parameters to authenticateCustomer ?
-/// Do i need to query the database ?
+initializePassport(passport);
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -128,10 +127,25 @@ app.post('/register', async (req, res) => {
 
 // Handling checkout 
 
-app.post('carts/:id/checkout', (req, res) => {
+app.post('/carts/:id/checkout', (req, res) => {
 
     let { id } = req.params;
-    // let { product_id, quantity } = req.body;
+    let { customer_id, product_id, quantity } = req.body;
+    let amount;
+
+    if (product_id === 1) {
+        amount = 26 * quantity;
+    }
+
+    if (product_id === 2) {
+        amount = 10 * quantity;
+    }
+
+    if (product_id === 3) {
+        amount = 77 * quantity;
+    }
+
+
     // console.log(product_id, quantity);
 
     pool.query(`select * from cart where cart_id=${id.toString()}`, (err, result) => {
@@ -142,7 +156,7 @@ app.post('carts/:id/checkout', (req, res) => {
         // if ther is a cart
         if (cart.length > 0) {
 
-            pool.query(`insert into orders(order_status,cart_id) values('completed','${id.toString()}')`, (err, result) => {
+            pool.query(`insert into orders(customer_id,amount,order_status,cart_id,product_id) values('${customer_id}','${amount}','fulfilled','${id.toString()}','${product_id}')`, (err, result) => {
                 if (err) throw err
 
                 res.status(200).send(result.rows);
