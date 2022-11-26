@@ -1,0 +1,185 @@
+openapi: 3.0.0
+info: 
+  title: Ecommerce project API 
+  description: Codecademy project backend by Simone Ghilotti.
+  contact:
+    name: Simone Ghilotti
+    url: https://simoneghilotti.netlify.app
+  version: 1.0.0
+paths:
+  /customers:
+      description: All customers
+      get:
+        description: Fetch all customers
+        responses: 
+          200:
+            description: 200 Success
+          500:
+            description: 500 Internal server error
+      post:
+        description: Create a customer
+        responses: 
+          200:
+            description: 200 Success
+          500:
+            description: 500 Internal server error
+  /customers/{customer_id}:
+      description: Single customer
+      get:
+        description: Fetch a customer by his ID
+        parameters: customer_id
+        responses: 
+          200:
+            description: 200 Success
+          500:
+            description: 500 Internal server error
+      delete:
+        description: Delete a customer by his ID
+        parameters: customer_id
+        responses: 
+          200:
+            description: 200 Success
+          500:
+            description: 500 Internal server error
+      put:
+        description: Update a customer by his ID
+        parameters: customer_id
+        responses: 
+          200:
+            description: 200 Success
+          500:
+            description: 500 Internal server error
+  /carts:
+      description: All carts
+      get:
+        description: Fetch all carts
+        responses: 
+          200:
+            description: 200 Success
+          500:
+            description: 500 Internal server error
+      post:
+        description: Create a cart
+        responses: 
+          200:
+            description: 200 Success
+          500:
+            description: 500 Internal server error
+  /carts/{cart_id}:
+      description: Single cart
+      get:
+        description: Fetch a cart by his ID
+        parameters: cart_id
+        responses: 
+          200:
+            description: 200 Success
+          500:
+            description: 500 Internal server error
+      delete:
+        description: Delete a cart by its ID
+        parameters: cart_id
+        responses: 
+          200:
+            description: 200 Success
+          500:
+            description: 500 Internal server error
+      put:
+        description: Update a cart by its ID
+        parameters: cart_id
+        responses: 
+          200:
+            description: 200 Success
+          500:
+            description: 500 Internal server error
+  /orders:
+      description: All orders
+      get:
+        description: Fetch all orders
+        responses: 
+          200:
+            description: 200 Success
+          500:
+            description: 500 Internal server error
+      post:
+        description: Create an order
+        responses: 
+          200:
+            description: 200 Success
+          500:
+            description: 500 Internal server error
+  /orders/{id}:
+      description: Single order
+      get:
+        description: Fetch an order by its ID
+        parameters: id
+        responses: 
+          200:
+            description: 200 Success
+          500:
+            description: 500 Internal server error
+  /products:
+      description: All products
+      get:
+        description: Fetch all products
+        responses: 
+          200:
+            description: 200 Success
+          500:
+            description: 500 Internal server error
+
+  /products/{product_id}:
+      description: Single product
+      get:
+        description: Fetch a product by its ID
+        parameters: product_id
+        responses: 
+          200:
+            description: 200 Success
+          500:
+            description: 500 Internal server error
+
+  /register:
+    post:
+      summary: "Register a new customer"
+      description: "Register a new customer"
+      parameters:
+      responses:
+        200:
+          description: 200 Success
+        409:
+          description: 409 Conflict
+        500:
+          description: 500 Internal Server Error
+
+  /login:
+    post:
+      summary: "Login to a customer account"
+      description: "Login to a customer account"
+      parameters:
+      responses:
+        200:
+          description: 200 Success
+        409:
+          description: 409 Conflict
+        500:
+          description: 500 Internal Server Error
+
+  /carts/{cart_id}/checkout:
+    post:
+      summary: "Checkout a cart and turn it into an order"
+      description: "Checkout a cart and turn it into an order"
+      parameters:
+      responses:
+        200:
+          description: 200 Success
+        409:
+          description: 409 Conflict
+        500:
+          description: 500 Internal Server Error
+
+
+
+
+
+        
+          

@@ -2,7 +2,24 @@ const express = require('express');
 const cartRouter = express.Router();
 const controller = require('./controller');
 
-// get all carts - Test
+// get all carts
+/**
+ * @swagger
+ * /carts:
+ *   get:
+ *     tags:
+ *       - Carts
+ *     description: Returns all carts
+ *     produces:
+ *       - application/json
+ *     responses:
+ *       200:
+ *         description: An array of cart objects
+ *         schema:
+ *           $ref: '#/carts/'
+ */
+
+// WHERE SHALL I PUT THE COMMENTS ABOVE FOR SWAGGER ?
 cartRouter.get('/',
     controller.getCarts)
 

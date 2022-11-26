@@ -1,5 +1,13 @@
 const express = require('express');
 
+/// Swagger imports
+var swaggerJSDoc = require('swagger-jsdoc');
+var swaggerUI = require('swagger-ui-express');
+const swaggerUi = require('swagger-ui-express');
+const yaml = require('js-yaml');
+const fs = require('fs');
+const path = require('path');
+
 const session = require('express-session');
 const bcrypt = require('bcrypt');
 const passport = require('passport');
@@ -10,6 +18,42 @@ initializePassport(passport);
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+/// Swagger section
+
+// swagger definition
+var swaggerDefinition = {
+    info: {
+        title: 'project ecommerce API Documentation',
+        version: '1.0.0',
+        description: 'ecommerce RESTful API with Swagger',
+    },
+    host: 'localhost:3000',
+    basePath: '/',
+};
+
+// options for the swagger docs
+var options = {
+    // import swaggerDefinitions
+    swaggerDefinition: swaggerDefinition,
+    // path to the API docs
+    apis: ['./routes/*.js'],
+};
+
+// initialize swagger-jsdoc
+var swaggerSpec = swaggerJSDoc(options);
+
+// serve swagger
+app.get('/swagger.json', function (req, res) {
+    res.setHeader('Content-Type', 'application/json');
+    res.send(swaggerSpec);
+});
+
+const swaggerDocument = yaml.safeLoad(fs.readFileSync(path.resolve(__dirname, './swagger.yaml')), 'utf-8');
+
+
+app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
+
 
 
 // new session
@@ -223,3 +267,20 @@ app.listen(PORT, (error) => {
 
 module.exports = app;
 
+
+
+
+
+/////// Questions for Harry
+/* Database: Foreign keys missing {
+orders: [ customer_id ? referencing customer customer_id ||||  cart_id ? referencing cart cart_id || not possible ?]
+}
+
+Database: Why when I am creating a new order clearing the cart the values in the table are not imported ?
+ I believe it has something to do with the foreign keys and the constraints on postgres
+
+Path: is there a way to hide all the json information displayed only to a certain user ? 
+
+Logout ejs page : #a ref does not log out the user. I believe authenticator function needs to be tweaked ?
+
+*/
