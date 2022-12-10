@@ -17,7 +17,7 @@ const initializePassport = require('./passport');
 initializePassport(passport);
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 5000;
 
 /// Swagger section
 
@@ -28,7 +28,7 @@ var swaggerDefinition = {
         version: '1.0.0',
         description: 'ecommerce RESTful API with Swagger',
     },
-    host: 'localhost:3000',
+    host: 'localhost:5000',
     basePath: '/',
 };
 
@@ -54,7 +54,8 @@ const swaggerDocument = yaml.safeLoad(fs.readFileSync(path.resolve(__dirname, '.
 
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 
-
+/// CHANGE ME IN CASE 
+app.set('view engine', 'html');
 
 // new session
 
@@ -102,7 +103,7 @@ app.use('/orders', orderRouter);
 // Redirect user to pages 
 
 app.get('/', notAuthenticated, (req, res) => {
-    res.render('index.ejs', { customer_name: req.customer_name });
+    res.render('./views/view/public/index' /* index.ejs, { customer_name: req.customer_name }*/);
 });
 
 app.get('/login', authenticator, (req, res) => {
@@ -278,6 +279,8 @@ orders: [ customer_id ? referencing customer customer_id ||||  cart_id ? referen
 
 Database: Why when I am creating a new order clearing the cart the values in the table are not imported ?
  I believe it has something to do with the foreign keys and the constraints on postgres
+
+Database: order_details table does not do anything ?
 
 Path: is there a way to hide all the json information displayed only to a certain user ? 
 
