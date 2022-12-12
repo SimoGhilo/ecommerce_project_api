@@ -17,6 +17,8 @@ const Login = () => {
                     </div>
                     <button type="submit">Login</button>
                 </form>
+                <br />
+                <p>Copyright 2022 E-Market</p>
             </div>
         </>
     );

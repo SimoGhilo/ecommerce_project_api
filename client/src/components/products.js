@@ -6,7 +6,7 @@ const Products = () => {
     let [products, setProducts] = useState([])
 
     useEffect(() => {
-        fetch('https://localhost:5000/products').then((response) => {
+        fetch('http://localhost:5000/products').then((response) => {
             response.json().then((data) => {
                 setProducts(data);
             });
@@ -21,13 +21,11 @@ const Products = () => {
                     <Product price={product.price} name={product.name} description={product.description} />
                 </div>
             ))}
+            <br />
+            <p>Copyright 2022 E-Market</p>
         </div>
     );
 };
 
 export default Products;
 
-// Use react links to each single product above ?
-
-// The useEffect is it right ? is the endpoint set up correctly ? Do you need to useState ?
-// Why react is not supported in my routes ? 

@@ -24,6 +24,8 @@ const Register = () => {
                     </div>
                     <button type="submit">Register</button>
                 </form>
+                <br />
+                <p>Copyright 2022 E-Market</p>
             </div>
         </>
     );

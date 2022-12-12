@@ -55,7 +55,7 @@ const swaggerDocument = yaml.safeLoad(fs.readFileSync(path.resolve(__dirname, '.
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 
 /// CHANGE ME IN CASE 
-app.set('view engine', 'html');
+//app.set('view engine', 'html');
 
 // new session
 
@@ -98,6 +98,8 @@ const pool = require('./database');
 app.use('/orders', orderRouter);
 
 // Order details routes ? constraints ? for Harry
+
+// How can I change the below ?
 
 
 // Redirect user to pages 
