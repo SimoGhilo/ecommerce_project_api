@@ -39,8 +39,6 @@ const Cart = () => {
     };
 
 
-    ///     2 approaches : either use the card component (return statement above) (sending down props)
-    ///      or the logic below: (Both not working)
 
     return (
         <div>

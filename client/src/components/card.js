@@ -17,7 +17,6 @@ const Card = (props) => {
             <p>{quantity}</p>
             <h6>Total price</h6>
             <p>£ {quantity * price}</p>
-            {console.log(quantity * price)}
         </>
     );
 };
