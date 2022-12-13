@@ -3,24 +3,12 @@ import React, { useState, useEffect } from 'react';
 
 const Card = (props) => {
 
-    let [price, setPrice] = useState(0);
-    let [name, setName] = useState('');
 
     let product_id = props.product_id;
     let quantity = props.quantity;
-
-
-    if (product_id === 1) {
-        setName('Deckchair');
-        setPrice(26);
-    } if (product_id === 2) {
-        setName('Stool');
-        setPrice(10);
-    } if (product_id === 3) {
-        setName('Table');
-        setPrice(77);
-    }
-
+    let name = props.name;
+    let price = props.price;
+    console.log('In cart component');
     return (
         <>
             <p>Items in your cart:</p>
