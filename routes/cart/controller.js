@@ -27,14 +27,17 @@ const getCartById = async (req, res) => {
 }
 
 const createCart = (req, res) => {
-    const { id } = req.body
+    const { cart_id } = req.body
     const { product_id } = req.body
     const { quantity } = req.body
     const { customer_id } = req.body  /// Error here
 
-    console.log(req.body.customer_id)
+
+    //console.log(quantity, 'quantity');
+    //console.log(cart_id, customer_id, 'cart_id', 'customer_id')
+    // console.log(product_id, 'product_id')
     try {
-        pool.query(`insert into cart (cart_id,product_id,quantity,customer_id) values (${id},${product_id},${quantity},${customer_id})`, (err, result) => {
+        pool.query(`insert into cart (cart_id,product_id,quantity,customer_id) values (${cart_id},${product_id},${quantity},${customer_id})`, (err, result) => {
             res.status(200).json(result.rows)
         });
     } catch (err) {

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 /// Error when using bycript ?
-var bcrypt = require('bcryptjs');
+//var bcrypt = require('bcryptjs');
 
 
 const Register = () => {
@@ -10,23 +10,29 @@ const Register = () => {
     const [email, setEmail] = useState('')
     const [address, setAddress] = useState('')
     const [password, setPassword] = useState('')
-    /*
-    async function hashPassword(password) {
+
+    /*async function hashPassword(password) {
         const hashedPassword = await bcrypt.hash(password, 10);
         return hashedPassword;
     }
 
-    useEffect(() => {
+    async function changePassword(password) {
         try {
-            const hashedPassword = hashPassword(password);
+            const hashedPassword = await hashPassword(password);
             setPassword(hashedPassword)
         } catch (error) {
             console.log(error)
         }
         console.log(password)
+    }
+
+    useEffect(() => {
+
+        changePassword(password);
+
     }, [password])
 
-      TRIED TO USE BCRYPT BUT DID NOT WORK */
+    TRIED TO USE BCRYPT BUT DID NOT WORK */
 
 
 
@@ -34,7 +40,7 @@ const Register = () => {
     async function register() {
         const url = 'http://localhost:5000/customers';
         const object = {
-            customer_id: 26,  // How to fix this ? auto increment in the database ?
+            customer_id: 27,  // How to fix this ? auto increment in the database ?
             customer_name: name,
             address: address,
             email: email,

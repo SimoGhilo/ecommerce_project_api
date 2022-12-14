@@ -82,10 +82,12 @@ app.use(bodyParser.json());
 
 // cors middleware
 const cors = require('cors');
-app.use(cors({
+app.use(cors());
+
+/*{
     origin: 'https://localhost:3000',
     credentials: true
-}));
+} */
 
 app.use(cookieParser('secret'))
 
