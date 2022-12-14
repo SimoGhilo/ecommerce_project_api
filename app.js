@@ -7,6 +7,7 @@ const swaggerUi = require('swagger-ui-express');
 const yaml = require('js-yaml');
 const fs = require('fs');
 const path = require('path');
+const cookieParser = require('cookie-parser');
 
 const session = require('express-session');
 const bcrypt = require('bcrypt');
@@ -61,8 +62,8 @@ app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 
 app.use(session({
     secret: 'secret',
-    resave: false,
-    saveUninitialized: false
+    resave: true,
+    saveUninitialized: true
 }));
 
 // initialize passport
@@ -81,7 +82,12 @@ app.use(bodyParser.json());
 
 // cors middleware
 const cors = require('cors');
-app.use(cors());
+app.use(cors({
+    origin: 'https://localhost:3000',
+    credentials: true
+}));
+
+app.use(cookieParser('secret'))
 
 // Routes
 const customerRouter = require('./routes/customer/customer');
@@ -97,9 +103,6 @@ const orderRouter = require('./routes/order/order');
 const pool = require('./database');
 app.use('/orders', orderRouter);
 
-// Order details routes ? constraints ? for Harry
-
-// How can I change the below ?
 
 
 // Redirect user to pages 
