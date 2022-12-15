@@ -24,6 +24,11 @@ const Login = () => {
         });
 
         result = await result.json();
+        console.log(result);
+
+        /// Login not working ?
+
+
     }
 
     /// Login implementation doesn't work

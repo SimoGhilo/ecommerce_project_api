@@ -182,25 +182,27 @@ app.post('/register', async (req, res) => {
 app.post('/carts/:id/checkout', (req, res) => {
 
     let { id } = req.params;
-    let { customer_id, product_id, quantity } = req.body;
-    let amount;
+    let { customer_id, product_id, quantity, price } = req.body;
 
-    if (product_id === 1) {
-        amount = 26 * quantity;
-    }
+    console.log(product_id, customer_id, quantity, id, price)
 
-    if (product_id === 2) {
-        amount = 10 * quantity;
-    }
 
-    if (product_id === 3) {
-        amount = 77 * quantity;
-    }
+    /*  if (product_id === 1) {
+          amount = 26 * quantity;
+      }
+  
+      if (product_id === 2) {
+          amount = 10 * quantity;
+      }
+  
+      if (product_id === 3) {
+          amount = 77 * quantity;
+      } */
 
 
     // console.log(product_id, quantity);
 
-    pool.query(`select * from cart where cart_id=${id.toString()}`, (err, result) => {
+    pool.query(`select * from cart where cart_id=${id}`, (err, result) => {
         if (err) throw err
         let cart = result.rows;
         console.log(cart)
@@ -208,7 +210,7 @@ app.post('/carts/:id/checkout', (req, res) => {
         // if ther is a cart
         if (cart.length > 0) {
 
-            pool.query(`insert into orders(customer_id,amount,order_status,cart_id,product_id) values('${customer_id}','${amount}','fulfilled','${id.toString()}','${product_id}')`, (err, result) => {
+            pool.query(`insert into orders(customer_id,amount,order_status,cart_id,product_id) values(${customer_id},${price},'fulfilled',${id.toString()},${product_id})`, (err, result) => {
                 if (err) throw err
 
                 res.status(200).send(result.rows);
@@ -216,7 +218,7 @@ app.post('/carts/:id/checkout', (req, res) => {
                 // if cart is checked out
 
                 if (result.rows) {
-                    pool.query(`delete from cart where cart_id=${id.toString()}`, (err, result) => {
+                    pool.query(`delete from cart where cart_id=${id}`, (err, result) => {
                         if (err) throw err
                         res.status(200).send(result.rows);
                     });

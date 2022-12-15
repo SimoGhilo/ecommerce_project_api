@@ -18,34 +18,12 @@ const Cart = () => {
     }, []);
 
 
-    async function handleCheckout(id) {
-
-        try {
-            const response = await fetch(`http://localhost:5000/carts/:${id}/checkout`, {
-                method: 'POST',
-                headers: {
-                    'content-type': 'application/json',
-                    'accept': 'application/json'
-                },
-                body: JSON.stringify(id)
-
-            })
-
-            return response.json();
-
-        } catch (error) {
-
-            console.error(error.message);
-
-        }
-
-    };
-
+    console.log(carts.map((cart) => { return cart.customer_id }));
 
 
     return (
         <>
-            <p>Items in your cart:</p>
+            <p>Your carts:</p>
             <div>
                 {
 
@@ -53,18 +31,13 @@ const Cart = () => {
                         <div key={cart.cart_id}>
                             <div>
                                 <div >
-                                    <Card quantity={cart.quantity} cart_id={cart.cart_id} product_id={cart.product_id} name={cart.name} price={cart.price} />
+                                    <Card quantity={cart.quantity} cart_id={cart.cart_id} product_id={cart.product_id} name={cart.name} price={cart.price} customer_id={cart.customer_id} />
                                 </div>
                             </div>
                         </div>
                     ))
                 }
             </div>
-            <p>Complete payment:</p>
-            <form method="post" action="payment">
-                <button type="submit" name="payment" /*onClick={handleCheckout(cart.cart_id)}*/ >Pay Now</button>
-            </form>
-            <br />
         </>
     );
 };

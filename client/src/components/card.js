@@ -9,6 +9,7 @@ const Card = (props) => {
     let quantity = props.quantity;
     let name = props.name;
     let price = props.price;
+    let customer_id = props.customer_id;
 
 
     async function handleRemove() {
@@ -17,7 +18,9 @@ const Card = (props) => {
 
         removeFromCart(cart_id)
     };
-    /// Removing an item from the cart
+    /// Removing an item from the cart , not working
+
+    console.log(cart_id);
 
     async function removeFromCart(cart_id) {
 
@@ -33,6 +36,47 @@ const Card = (props) => {
 
         });
     }
+
+    async function handleCheckout() {
+
+        console.log('checking cart_id', props.cart_id);
+        await checkout(props.cart_id)
+    }
+
+    async function checkout(cart_id) {
+
+        const object = {
+
+            customer_id: customer_id,
+            price: price,
+            product_id: product_id,
+            quantity: quantity
+        }
+        try {
+            const response = await fetch(`http://localhost:5000/carts/:${cart_id}/checkout`, {
+                method: 'POST',
+                headers: {
+                    'content-type': 'application/json',
+                    'accept': 'application/json'
+                },
+                body: JSON.stringify(object)
+
+            })
+
+            return response.json();
+
+        } catch (error) {
+
+            console.error(error.message);
+
+        }
+
+    };
+
+
+
+
+
     return (
         <>
             <p>{name}</p>
@@ -41,6 +85,10 @@ const Card = (props) => {
             <h6>Price</h6>
             <p>£ {quantity * price}</p>
             <button onClick={handleRemove}>Remove from your cart</button>
+            <br />
+            <p>Complete payment:</p>
+            <button type="submit" name="payment" onClick={handleCheckout} >Pay Now</button>
+            <br />
         </>
     );
 };
