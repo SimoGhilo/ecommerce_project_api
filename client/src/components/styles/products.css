@@ -1,0 +1,17 @@
+/*.container {
+    border: black solid 1px;
+} */
+
+.wrapper {
+
+display: flex;
+justify-content:center; 
+}
+
+
+.box {
+    border: black solid 1px;
+    padding: 6rem;
+    margin-inline: 1.5rem;
+    margin-bottom: 1rem;
+}

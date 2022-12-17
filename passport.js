@@ -46,7 +46,7 @@ function initialize(passport) {
 
     passport.use(new localStartegy({
         usernameField: "email",
-        passwordField: "password",
+        passwordField: "customer_password", /// changed from "password"
     }, authenticateCustomer));
 
     passport.serializeUser((customer_id, done) => {

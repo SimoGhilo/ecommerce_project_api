@@ -1,11 +1,41 @@
+
+
 .App {
   text-align: center;
+  font-family: 'Source Code Pro', monospace;
+  
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.title {
+  font-size: 3.5rem;
 }
+
+.container {
+  display: flex;
+  flex-direction: row;
+  list-style: none;
+  justify-content: center;
+  
+  
+}
+
+.link {
+  padding: 2rem;
+  text-align: center;
+  font-weight: bold;
+  font-size: large;
+  
+}
+
+.link:hover {
+  text-shadow: 2px 2px rgb(127, 80, 245);
+}
+
+.link:active {
+  text-shadow: 0px 0px rgb(127, 80, 245);
+}
+
+
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
@@ -27,6 +57,8 @@
 .App-link {
   color: #61dafb;
 }
+
+
 
 @keyframes App-logo-spin {
   from {

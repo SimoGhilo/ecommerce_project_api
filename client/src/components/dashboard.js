@@ -5,6 +5,7 @@ const Dashboard = () => {
         <div>
             <header>
             </header>
+            {/*<h4>Logout</h4>*/}
             <br />
             <p>Copyright 2022 E-Market</p>
         </div>

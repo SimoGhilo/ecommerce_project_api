@@ -13,15 +13,22 @@ const getCustomers = async (req, res) => {
 }
 
 const createCustomer = (req, res) => {
-    const { customer_id } = req.body
+
     const { customer_name } = req.body
     const { address } = req.body
     const { email } = req.body
     const { customer_password } = req.body
     try {
-        pool.query(`insert into customers (customer_id,customer_name,address,email,customer_password) 
-        values (${customer_id},'${customer_name}','${address}','${email}','${customer_password}')`, (err, result) => {
-            res.status(200).json(result.rows)
+        let query = `insert into customers (customer_name,address,email,customer_password)  values ('${customer_name}','${address}','${email}','${customer_password}')`;
+        console.log(query);
+        pool.query(query, (err, result) => {
+            if (err) {
+                console.error(err.message);
+                res.status(500).send(err.message);
+            } else {
+                res.status(200).json(result.rows)
+            }
+
         });
     } catch (err) {
         console.log(err.message);

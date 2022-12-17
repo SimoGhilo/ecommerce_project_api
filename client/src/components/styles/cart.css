@@ -1,0 +1,15 @@
+p {
+    font-size: 1.2rem;
+  }
+
+.checkout {
+    display: flex;
+    justify-content:center;
+}
+
+.cart {
+    border: black solid 1px;
+    flex-direction: row;
+    margin: 2rem;
+    flex-wrap: wrap;
+}

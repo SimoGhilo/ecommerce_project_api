@@ -7,18 +7,34 @@ import NotFound from './components/notFound';
 import Products from './components/products';
 import Dashboard from './components/dashboard';
 import Checkout from './components/checkout';
+import Stool from './components/products/stool'
+import Table from './components/products/table'
+import Deckchair from './components/products/deckchair'
+
+const linkStyles = {
+  textDecoration: "none",
+  color: "#202020",
+  fontSize: "1.35rem",
+
+}
+
+const h1Styles = {
+  color: "#202020",
+  textShadow: "2px 2px rgb(127, 80, 245)",
+}
 
 function App() {
   return (
     <div className="App">
-      <h1>E - Market</h1>
+      <h1 className='title' style={h1Styles}><strong>E - Market</strong></h1>
       <nav className="navbar">
-        <ul>
-          <li><Link to="/">Home</Link></li>
-          <li><Link to="/register">Register</Link></li>
-          <li><Link to="/login">Log in</Link></li>
-          <li><Link to="/products">Products</Link></li>
-          <li><Link to="/carts">View cart</Link></li>
+        <ul className='container'>
+          <li className='link'><Link style={linkStyles} to="/">Home</Link></li>
+          <li className='link'><Link style={linkStyles} to="/register">Register</Link></li>
+          <li className='link'><Link style={linkStyles} to="/login">Log in</Link></li>
+          <li className='link'><Link style={linkStyles} to="/products">Products</Link></li>
+          <li className='link'><Link style={linkStyles} to="/carts">View cart</Link></li>
+          {/* <li><Link to="/logout">Logout</Link></li> */}
         </ul>
       </nav>
       <Routes>
@@ -28,6 +44,10 @@ function App() {
         <Route path='/register' element={<Register />} />
         <Route path='/carts' element={<Cart />} />
         <Route path='/carts/:id/checkout' element={<Checkout />} />
+        <Route path='/logout' element={<Login />} />
+        <Route path='/products/deckchair' element={<Deckchair />} />
+        <Route path='/products/stool' element={<Stool />} />
+        <Route path='/products/table' element={<Table />} />
         <Route path='*' element={<NotFound />} />
       </Routes>
     </div>

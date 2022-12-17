@@ -46,7 +46,7 @@ const createCart = (req, res) => {
 
 };
 
-//// Difference between async and normal function?
+
 
 const deleteCartById = (req, res) => {
     const id = parseInt(req.params.id);

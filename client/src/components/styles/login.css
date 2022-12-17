@@ -1,0 +1,15 @@
+input {
+    border-radius: 2rem;
+    width: 20rem;
+    border: #282c34, solid 1px;
+    font-family: inherit;
+  }
+
+.top {
+    margin-bottom: 2rem;
+}
+
+#password {
+    width: 18.3rem;
+    margin-bottom: 2rem;    
+}

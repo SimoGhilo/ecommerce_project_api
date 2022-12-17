@@ -8,7 +8,7 @@ const yaml = require('js-yaml');
 const fs = require('fs');
 const path = require('path');
 const cookieParser = require('cookie-parser');
-
+const cors = require('cors');
 const session = require('express-session');
 const bcrypt = require('bcrypt');
 const passport = require('passport');
@@ -81,13 +81,12 @@ const bodyParser = require('body-parser');
 app.use(bodyParser.json());
 
 // cors middleware
-const cors = require('cors');
-app.use(cors());
 
-/*{
-    origin: 'https://localhost:3000',
+app.use(cors({
+    origin: 'http://localhost:3000',
     credentials: true
-} */
+}));
+
 
 app.use(cookieParser('secret'))
 
@@ -236,11 +235,26 @@ app.post('/carts/:id/checkout', (req, res) => {
     })
 });
 
+// Login
 
 app.post('/login', passport.authenticate('local', {
     successRedirect: '/',
     failureRedirect: '/login',
+}, (req, res, next) => {
+    {
+        /// any modifications here ?
+    }
 }));
+
+// Logout
+
+app.post('/logout', (req, res, next) => {
+
+    req.logout();
+    if (error) { return next(error); }
+    res.redirect('/login')
+
+});
 
 
 /// Making sure that user is authenticated, if so, redirect to dashboard otherwise redirect to login
