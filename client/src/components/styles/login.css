@@ -9,7 +9,12 @@ input {
     margin-bottom: 2rem;
 }
 
-#password {
+#password-login {
     width: 18.3rem;
     margin-bottom: 2rem;    
+}
+
+.lower {
+    margin-top: 1rem;
+    margin-bottom: 5rem;
 }

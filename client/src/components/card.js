@@ -91,9 +91,9 @@ const Card = (props) => {
         const object = {
 
             customer_id: customer_id,
-            price: price,
+            price: togglePrice * toggleQuantity,
             product_id: product_id,
-            quantity: quantity
+            quantity: toggleQuantity
         }
         try {
             const response = await fetch(`http://localhost:5000/carts/${cart_id}/checkout`, {

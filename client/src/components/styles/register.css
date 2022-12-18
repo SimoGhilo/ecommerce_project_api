@@ -1,0 +1,35 @@
+.values{
+    
+    margin-bottom: 1rem;
+}
+#forename{
+    margin-left: 0.4rem;
+    
+}
+#customer_name{
+    margin-left: 0.4rem;
+}
+
+#password{
+    width: 4rem;
+}
+
+#address{
+    margin-left: 0.6rem;
+}
+
+#addressInput{
+    
+    margin-right: 1.5rem;
+}
+#createPassword{
+    width: 17rem;
+    padding-left: 3rem;
+    margin-right: 9rem;
+    
+}
+
+.lower {
+    margin-top: 1rem;
+    margin-bottom: 5rem;
+}

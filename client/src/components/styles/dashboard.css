@@ -1,0 +1,7 @@
+.paragraph{
+    display: inline-block;
+    width: 90%;
+    line-height: 3rem;
+    font-weight: bold;
+}
+

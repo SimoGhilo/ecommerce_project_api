@@ -183,7 +183,7 @@ app.post('/carts/:id/checkout', (req, res) => {
     let { id } = req.params;
     let { customer_id, product_id, quantity, price } = req.body;
 
-    console.log(product_id, customer_id, quantity, id, price)
+    console.log(product_id, customer_id, 'quantity', quantity, id, 'price', price)
 
 
     /*  if (product_id === 1) {
@@ -240,11 +240,11 @@ app.post('/carts/:id/checkout', (req, res) => {
 app.post('/login', passport.authenticate('local', {
     successRedirect: '/',
     failureRedirect: '/login',
-}, (req, res, next) => {
-    {
-        /// any modifications here ?
-    }
-}));
+}), (req, res) => {
+
+    res.send({ success: true })
+
+});
 
 // Logout
 

@@ -1,8 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 /// Error when using bycript ?
 //var bcrypt = require('bcryptjs');
+import './styles/register.css';
+
+const h1Styles = {
+    color: "#202020",
+    textShadow: "2px 2px rgb(127, 80, 245)",
+    marginBottom: "2rem",
+}
 
 
 const Register = () => {
@@ -11,6 +19,18 @@ const Register = () => {
     const [email, setEmail] = useState('')
     const [address, setAddress] = useState('')
     const [password, setPassword] = useState('')
+
+
+    const [registered, setRegistered] = useState(false);
+
+    const navigate = useNavigate();
+
+    // Redirect below doesnt work
+    useEffect(() => {
+        if (registered) {
+            navigate('/login');
+        }
+    }, [registered]);
 
     /*async function hashPassword(password) {
         const hashedPassword = await bcrypt.hash(password, 10);
@@ -73,9 +93,10 @@ const Register = () => {
         });
 
         result = await result.json();
+        setRegistered(true);
     }
 
-    /// Function works, but now I will have to find a way to redirect to the dashboard, hash 
+    /// Function works, I need to hash 
     /// the password and  clearing the form fields once submitted.
     /// Why does it not hash the password from the app.post middleware in app.js ?
 
@@ -83,29 +104,32 @@ const Register = () => {
     return (
         <>
             <div>
-                <h1>Register</h1>
-                <div className='field'>
-                    <label for="customer_name">Name: </label>
+                <br />
+                <h1 style={h1Styles}>Register</h1>
+                <br />
+                <div className='values'>
+                    <label for="customer_name" id="forename">Name: </label>
                     <input type="text" name="customer_name" id="customer_name"
                         onChange={(e) => setName(e.target.value)} required />
                 </div>
-                <div className='field'>
+                <div className='values'>
                     <label for="email">Email: </label>
                     <input type="email" name="email" id="email"
                         onChange={(e) => setEmail(e.target.value)} required />
                 </div>
-                <div className='field'>
-                    <label for="address">Address: </label>
-                    <input type="text" name="address" id="address"
+                <div className='values'>
+                    <label for="address" id="address">Address:  </label>
+                    <input type="text" name="address" id="addressInput"
                         onChange={(e) => setAddress(e.target.value)} />
                 </div>
-                <div className='field'>
-                    <label for="password">Create a new password: </label>
-                    <input type="password" name="password" id="password"
+                <div className='values'>
+                    <label for="password" id="password">Create a new password: </label>
+                    <input type="password" name="password" id="createPassword"
                         onChange={(e) => setPassword(e.target.value)} required />
                 </div>
-                <button type="submit" onClick={register}>Register</button>
+                <button className='lower' type="submit" onClick={register}>Register</button>
                 <br />
+                <hr />
                 <p>Copyright 2022 E-Market</p>
             </div>
         </>
