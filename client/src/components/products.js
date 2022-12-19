@@ -3,6 +3,8 @@ import Product from './product';
 import './styles/products.css';
 
 
+
+
 const Products = () => {
     let [products, setProducts] = useState([])
 
@@ -13,6 +15,7 @@ const Products = () => {
             });
         });
     }, [])
+
 
 
     return (

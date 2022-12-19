@@ -39,6 +39,9 @@ const Cart = () => {
                     ))
                 }
             </div>
+            <br />
+            <hr />
+            <p>Copyright 2022 E-Market</p>
         </>
     );
 };

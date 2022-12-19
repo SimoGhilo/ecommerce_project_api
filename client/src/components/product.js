@@ -9,6 +9,13 @@ const linkStyles = {
 
 }
 
+const links = {
+    empty: '',
+    deckchair: "./media/deckchair.jpg",
+    stool: "./media/stool.jpg",
+    table: "./media/table.jpg"
+}
+
 
 const Product = (props) => {
 
@@ -53,11 +60,11 @@ const Product = (props) => {
         result = await result.json();
     };
 
-
+    console.log(props.product_id);
     return (
         <div>
-            <div>
-                <img src={src} />
+            <div className="card" style={{ backgroundImage: links[props.name] }}>
+                {/*<img src={src} />*/}
                 <br />
                 <Link className='link' style={linkStyles} to={`/products/${props.name}`}>{titleCase(props.name)}</ Link>
                 <p>£ {props.price}</p>

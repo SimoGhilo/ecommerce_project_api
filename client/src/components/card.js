@@ -1,5 +1,19 @@
 import React, { useState, useEffect } from 'react';
 
+// Stripe
+/*import { loadStripe } from '@stripe/stripe-js';
+
+let stripePromise = loadStripe(process.env.REACT_APP_STRIPE_KEY);
+
+const getStripe = () => {
+
+    if (!stripePromise) {
+        stripePromise = loadStripe(process.env.REACT_APP_STRIPE_KEY);
+    }
+
+    return stripePromise;
+} */
+
 
 // helper function & styles 
 
@@ -10,7 +24,48 @@ function titleCase(string) {
 
 const Card = (props) => {
 
+    // stripe objects
+    /*
+        const deckchairStripe = {
+            stripePriceDeckchair: "price_1MGgwAEhCjW3jh5VyCgwoHDk",
+            stripeQuantity: 1
+        }
+    
+        const stoolStripe = {
+            stripePriceStool: "price_1MGgwTEhCjW3jh5VCK3tPlxU",
+            stripeQuantity: 1
+        }
+    
+        const tableStripe = {
+            stripePriceTable: "price_1MGgwwEhCjW3jh5VwOsQDFv6",
+            stripeQuantity: 1
+        }
+    
+        const checkoutOptions = {
+            lineItems: [deckchairStripe, stoolStripe, tableStripe],
+            mode: "payment",
+            successUrl: `${window.location.origin}`,
+            cancelUrl: `${window.location.origin}/cancel`,
+    
+        }
+    
+        const redirectToCheckout = async () => {
+    
+            const stripe = await getStripe();
+            const { error } = await stripe.redirectToCheckout(checkoutOptions);
+            console.log("stripe checkout error", error);
+    
+        } */
+
     // Setting images paths
+
+    const paths = {
+        empty: '',
+        deckchair: "./media/deckchair.jpg",
+        stool: "./media/stool.jpg",
+        table: "./media/table.jpg"
+    }
+
 
     let src = ''
 
@@ -108,6 +163,9 @@ const Card = (props) => {
 
             return response.json();
 
+
+
+
         } catch (error) {
 
             console.error(error.message);
@@ -123,7 +181,7 @@ const Card = (props) => {
     return (
         <>
             <p>{titleCase(name)}</p>
-            <img src={src} />
+            <img src={paths[props.name]} />
             <p>Quantity:</p>
             <p><button style={buttonAmountStyle} onClick={useHandleIncrement}>+</button>{toggleQuantity}<button style={buttonAmountStyle} onClick={useHandleDecrement}>-</button></p>
             <h6>Price</h6>
@@ -131,7 +189,7 @@ const Card = (props) => {
             <button onClick={handleRemove}>Remove from your cart</button>
             <br />
             <p>Complete payment:</p>
-            <button type="submit" name="payment" onClick={handleCheckout} >Pay Now</button>
+            <button type="submit" name="payment" onClick={handleCheckout} /* stripe checkout onClick={redirectToCheckout}*/ >Pay Now</button>
             <br />
         </>
     );

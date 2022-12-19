@@ -123,6 +123,7 @@ const Register = () => {
                         onChange={(e) => setAddress(e.target.value)} />
                 </div>
                 <div className='values'>
+                    <label for="password" id="hidden" >Password: </label>
                     <label for="password" id="password">Create a new password: </label>
                     <input type="password" name="password" id="createPassword"
                         onChange={(e) => setPassword(e.target.value)} required />

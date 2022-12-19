@@ -29,7 +29,48 @@
     
 }
 
+#hidden{
+    display: none;
+}
+
 .lower {
     margin-top: 1rem;
     margin-bottom: 5rem;
+}
+
+@media screen and (max-width: 480px) {
+
+    #address {
+        margin-bottom: -4rem;
+    }
+
+#password{
+
+display: none;
+}
+
+#createPassword{
+    margin-left: 6rem;
+    margin-bottom: 5rem; 
+}
+
+#hidden{
+    display: flex;
+
+}
+}
+
+
+@media screen and (min-width: 480px) and (max-width: 868px) {
+
+
+        #createPassword{
+            
+            margin-bottom: 5rem;
+            margin-left: 2rem; 
+        }
+        
+ 
+        
+
 }

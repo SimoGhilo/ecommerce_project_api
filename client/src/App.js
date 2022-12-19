@@ -11,6 +11,8 @@ import Stool from './components/products/stool'
 import Table from './components/products/table'
 import Deckchair from './components/products/deckchair'
 
+import "@stripe/stripe-js";
+
 const linkStyles = {
   textDecoration: "none",
   color: "#202020",

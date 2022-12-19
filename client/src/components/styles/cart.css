@@ -5,6 +5,8 @@ p {
 .checkout {
     display: flex;
     justify-content:center;
+    flex-direction: row;
+    flex-wrap: wrap;
 }
 
 .cart {
@@ -12,4 +14,18 @@ p {
     flex-direction: row;
     margin: 2rem;
     flex-wrap: wrap;
+}
+
+@media screen and (max-width: 480px) {
+
+    .checkout {
+        flex-direction: column;
+    }
+
+}
+
+@media screen and (min-width: 480px) and (max-width: 868px) {
+    .checkout {
+        flex-direction: column;
+    }
 }
