@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 // Stripe
 /*import { loadStripe } from '@stripe/stripe-js';
@@ -23,6 +24,8 @@ function titleCase(string) {
 
 
 const Card = (props) => {
+
+    const navigate = useNavigate();
 
     // stripe objects
     /*
@@ -89,6 +92,7 @@ const Card = (props) => {
     // const [cart_id, setCart_id] = useState(0);
     const [toggleQuantity, setToggleQuantity] = useState(props.quantity);
     const [togglePrice, setTogglePrice] = useState(props.price);
+    const [checkedout, setCheckedOut] = useState(false);
 
     let product_id = props.product_id;
     let quantity = props.quantity;
@@ -101,7 +105,11 @@ const Card = (props) => {
             setToggleQuantity(0);
         }
 
-    }, [toggleQuantity, togglePrice]);
+        if (checkedout) {
+            navigate(`./${props.cart_id}/checkout`);
+        }
+
+    }, [toggleQuantity, togglePrice, checkedout]);
 
     function useHandleIncrement() {
         setToggleQuantity(toggleQuantity + 1)
@@ -122,7 +130,7 @@ const Card = (props) => {
 
     async function removeFromCart(cart_id) {
 
-        const url = `http:localhost:5000/carts/${cart_id}`
+        const url = `http://localhost:5000/carts/${cart_id}`
         await fetch(url, {
             method: 'DELETE',
             success: function () {
@@ -139,6 +147,7 @@ const Card = (props) => {
 
         console.log('checking cart_id', props.cart_id);
         await checkout(props.cart_id)
+        setCheckedOut(true);
     }
 
     async function checkout(cart_id) {

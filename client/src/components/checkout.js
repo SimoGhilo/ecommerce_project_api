@@ -1,13 +1,33 @@
-import React from 'react';
-import Cart from './cart';
+import React, { useState, useEffect } from 'react';
+import Order from './order';
+
 
 const Checkout = () => {
+
+    const [orders, setOrders] = useState([]);
+    console.log(orders);
+
+    useEffect(() => {
+        fetch('http://localhost:5000/orders').then((response) => {
+            response.json().then((data) => {
+                setOrders(data);
+            });
+        });
+    }, [])
 
 
     return (
         <div>
             <p>Thank you for placing your order !</p>
             <br />
+            <h2>Your orders:</h2>
+            {orders.map((order) => (
+                <div className="order" key={order.id}>
+                    <Order id={order.id} product_id={order.product_id} order_status={order.order_status} amount={order.amount} quantity={order.quantity} customer_id={order.customer_id} />
+                </div>
+            ))}
+            <br />
+            <hr />
             <p>Copyright 2022 E-Market</p>
         </div>
     );

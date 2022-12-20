@@ -186,21 +186,6 @@ app.post('/carts/:id/checkout', (req, res) => {
     console.log(product_id, customer_id, 'quantity', quantity, id, 'price', price)
 
 
-    /*  if (product_id === 1) {
-          amount = 26 * quantity;
-      }
-  
-      if (product_id === 2) {
-          amount = 10 * quantity;
-      }
-  
-      if (product_id === 3) {
-          amount = 77 * quantity;
-      } */
-
-
-    // console.log(product_id, quantity);
-
     pool.query(`select * from cart where cart_id=${id}`, (err, result) => {
         if (err) throw err
         let cart = result.rows;
@@ -217,9 +202,12 @@ app.post('/carts/:id/checkout', (req, res) => {
                 // if cart is checked out
 
                 if (result.rows) {
+                    pool.query(`insert into order_details(product_id,quantity,cart_id) values(${product_id},${quantity},${id})`, (err, result) => {
+                        if (err) throw err
+                    });
                     pool.query(`delete from cart where cart_id=${id}`, (err, result) => {
                         if (err) throw err
-                        res.status(200).send(result.rows);
+                        // res.status(200).send(result.rows);
                     });
                 }
             })
@@ -238,11 +226,12 @@ app.post('/carts/:id/checkout', (req, res) => {
 // Login
 
 app.post('/login', passport.authenticate('local', {
-    successRedirect: '/',
-    failureRedirect: '/login',
+    // successRedirect: '/',
+    // failureRedirect: '/login',
 }), (req, res) => {
 
-    res.send({ success: true })
+    res.send({ message: 'Logged in successfully' });
+
 
 });
 

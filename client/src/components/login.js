@@ -46,7 +46,8 @@ const Login = () => {
 
 
         if (result.status === 200) {
-            console.log('logged in', result);
+            console.log('logged in');
+            const data = await result.json();
             setLoggedIn(true);
         }
 
