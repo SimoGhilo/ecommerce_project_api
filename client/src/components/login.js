@@ -1,6 +1,7 @@
 import './styles/login.css';
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import bcrypt from 'bcryptjs'
 
 
 // helper functions & styles
@@ -29,6 +30,7 @@ const Login = () => {
 
 
     async function login() {
+
         const url = 'http://localhost:5000/login';
         const object = {
             email: email,

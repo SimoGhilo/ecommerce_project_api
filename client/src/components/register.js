@@ -1,10 +1,11 @@
+import './styles/register.css';
 import React, { useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 /// Error when using bycript ?
-//var bcrypt = require('bcryptjs');
-import './styles/register.css';
+var bcrypt = require('bcryptjs');
+
 
 const h1Styles = {
     color: "#202020",
@@ -21,11 +22,13 @@ const Register = () => {
     const [password, setPassword] = useState('')
 
 
+    // Redirect customer to login page
+
     const [registered, setRegistered] = useState(false);
 
     const navigate = useNavigate();
 
-    // Redirect below doesnt work
+
     useEffect(() => {
         if (registered) {
             navigate('/login');
@@ -59,12 +62,13 @@ const Register = () => {
 
 
     async function register() {
+        const hashedPassword = await bcrypt.hash(password, 10);
         const url = 'http://localhost:5000/customers';
         const object = {
             customer_name: name,
             address: address,
             email: email,
-            customer_password: password
+            customer_password: hashedPassword
         }
 
         /*  axios.post(url, object, {
@@ -80,7 +84,7 @@ const Register = () => {
           EITHER WAY WORKS , AXIOS AND AJAX CALL
           */
 
-        const result = await fetch(url, {
+        let result = await fetch(url, {
             method: 'POST',
             credentials: 'include',
             mode: 'cors',
@@ -96,9 +100,9 @@ const Register = () => {
         setRegistered(true);
     }
 
-    /// Function works, I need to hash 
-    /// the password and  clearing the form fields once submitted.
-    /// Why does it not hash the password from the app.post middleware in app.js ?
+    /// Function works, I need to hash the password
+
+    /// Why does it not hash the password from the app.post middleware in app.js ? *********
 
 
     return (

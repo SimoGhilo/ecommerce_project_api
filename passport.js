@@ -6,7 +6,9 @@ const pool = require('./database');
 
 function initialize(passport) {
 
-    const authenticateCustomer = (email, customer_password, done) => {
+
+
+    async function authenticateCustomer(email, customer_password, done) {
         //console.log(pool);
         pool.query(`select * from customers where email='${email}'`, (err, result) => {
             if (err) {
@@ -17,15 +19,14 @@ function initialize(passport) {
             // if there is a customer
 
             if (result.rows.length > 0) {
+
                 const customer = result.rows[0];
                 console.log('password comparison', customer_password, customer.customer_password);
                 bcrypt.compare(customer_password, customer.customer_password, (error, isMatch) => {
 
                     if (error) throw error
 
-                    isMatch = true;
-
-                    console.log('In passport', isMatch)
+                    console.log('In passport is Match:', isMatch)
                     if (isMatch) {
 
                         return done(null, customer)

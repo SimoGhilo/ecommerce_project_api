@@ -1,4 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+
+
 
 const h1Styles = {
     color: "#202020",
@@ -8,6 +12,19 @@ const h1Styles = {
 const pStyles = { fontWeight: "bold", display: "inline-block", width: "90%" };
 
 const Stool = () => {
+
+    const [goBack, setGoBack] = useState(false);
+
+    const navigate = useNavigate();
+
+
+    useEffect(() => {
+        if (goBack) {
+            navigate(-1)
+        }
+    }, [goBack])
+
+
     return (
         <div>
             <h1 style={h1Styles}>Stool</h1>
@@ -22,6 +39,7 @@ const Stool = () => {
                 Excepteur sint occaecat cupidatat non proident,
                 sunt in culpa qui officia deserunt mollit anim id est laborum."
             </p>
+            <h5 className='link' onClick={() => setGoBack(true)}>Go back</h5>
             <br />
             <hr />
             <p>Copyright 2022 E-Market</p>

@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const pStyles = { fontWeight: "bold", display: "inline-block", width: "90%" };
 const h1Styles = {
@@ -8,6 +9,17 @@ const h1Styles = {
 }
 
 const Deckchair = () => {
+
+    const [goBack, setGoBack] = useState(false);
+
+    const navigate = useNavigate();
+
+
+    useEffect(() => {
+        if (goBack) {
+            navigate(-1)
+        }
+    }, [goBack])
 
 
     return (
@@ -24,6 +36,7 @@ const Deckchair = () => {
                 Excepteur sint occaecat cupidatat non proident,
                 sunt in culpa qui officia deserunt mollit anim id est laborum."
             </p>
+            <h5 className='link' onClick={() => setGoBack(true)}>Go back</h5>
             <br />
             <hr />
             <p>Copyright 2022 E-Market</p>

@@ -153,6 +153,7 @@ app.post('/register', async (req, res) => {
     } else {
 
         const hashedPassword = await bcrypt.hash(password, 10);
+        console.log('hashed password in server', hashedPassword)
 
         pool.query(`select * from customers where email='${email}'`, (err, result) => {
             if (err) throw err
