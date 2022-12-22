@@ -1,6 +1,7 @@
 import './App.css';
 import Login from './components/login';
 import { Route, Routes, Link } from "react-router-dom"
+import { useEffect, useState } from 'react';
 import Cart from './components/cart';
 import Register from './components/register';
 import NotFound from './components/notFound';
@@ -25,7 +26,41 @@ const h1Styles = {
   textShadow: "2px 2px rgb(127, 80, 245)",
 }
 
+
+
 function App() {
+
+  /// Is the below correct or the one in login.js?
+
+  const [loggedIn, setLoggedIn] = useState(false);
+
+  async function login() {
+    const url = 'http://localhost:5000/isLoggedIn';
+    let result = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-type': 'application/json',
+        'Accept': 'application/json'
+      }
+    })
+
+    result = result.json();
+    return result;
+  }
+
+  useEffect(() => {
+    let result = login();
+    result.then((data) => {
+      console.log(data.loggedIn);
+      setLoggedIn(data.loggedIn);
+    }).catch((error) => { console.log(error) })
+
+
+  }, []);
+
+
+
+
   return (
     <div className="App">
       <h1 className='title' style={h1Styles}><strong>E - Market</strong></h1>

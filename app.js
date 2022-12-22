@@ -63,7 +63,11 @@ app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 app.use(session({
     secret: 'secret',
     resave: true,
-    saveUninitialized: true
+    saveUninitialized: false,
+    cookie: {
+        expires: 60 * 60 * 24,
+
+    }
 }));
 
 // initialize passport
@@ -113,7 +117,12 @@ app.get('/', notAuthenticated, (req, res) => {
 });
 
 app.get('/login', authenticator, (req, res) => {
-    res.render('login.ejs');
+    if (req.session.user) {
+        res.send({ loggedIn: true, customer: req.session.user });
+    } else {
+        res.send({ loggedIn: false });
+    }
+    // res.render('login.ejs');
 });
 
 app.get('/register', authenticator, (req, res) => {
@@ -224,14 +233,34 @@ app.post('/carts/:id/checkout', (req, res) => {
     })
 });
 
-// Login
+// Login in login.js
 
 app.post('/login', passport.authenticate('local', {
-    // successRedirect: '/',
-    // failureRedirect: '/login',
-}), (req, res) => {
 
-    res.send({ message: 'Logged in successfully' });
+}), (req, res) => {
+    //console.log(req.session.passport.user);
+    if (req.session.passport.user) {
+        res.send({ loggedIn: true, customer: req.session.passport.user });
+    } else {
+        res.send({ loggedIn: false });
+    }
+
+    // console.log(req.session, 'testing session');
+    // res.send({ message: 'Logged in successfully' });
+
+
+});
+
+// Maintain the session in App.js
+
+app.get('/isLoggedIn', (req, res) => {
+    //console.log(req.session.passport.user);
+    if (req.session.passport.user) {
+        res.send({ loggedIn: true, customer: req.session.passport.user });
+    } else {
+        res.send({ loggedIn: false });
+    }
+
 
 
 });
@@ -285,15 +314,8 @@ module.exports = app;
 
 
 
-/////// Questions for Harry
-/* Database: Foreign keys missing {
-orders: [ customer_id ? referencing customer customer_id ||||  cart_id ? referencing cart cart_id || not possible ?]
-}
 
-Database: Why when I am creating a new order clearing the cart the values in the table are not imported ?
- I believe it has something to do with the foreign keys and the constraints on postgres
-
-Database: order_details table does not do anything ?
+/*
 
 Path: is there a way to hide all the json information displayed only to a certain user ? 
 

@@ -34,9 +34,10 @@ const Login = () => {
         const url = 'http://localhost:5000/login';
         const object = {
             email: email,
-            customer_id: 3,  // How to fix this ? auto increment in the database ?
             customer_password: password
         }
+
+
         const result = await fetch(url, {
             method: 'POST',
             headers: {
@@ -50,11 +51,13 @@ const Login = () => {
         if (result.status === 200) {
             console.log('logged in');
             const data = await result.json();
-            setLoggedIn(true);
+            // set state to logged in
+            setLoggedIn(data.loggedIn);;
         }
 
         else {
             console.log('invalid credentials');
+            alert('Invalid credentials');
         }
 
         //TESTING ABOVE

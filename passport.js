@@ -54,10 +54,12 @@ function initialize(passport) {
     }, authenticateCustomer));
 
     passport.serializeUser((customer_id, done) => {
+        console.log('serialzinging yser', customer_id);
         done(null, customer_id)
     });
 
     passport.deserializeUser((customer, done) => {
+        console.log('deserializing yser', customer);
         let query = `select * from customers where customer_id=${customer.customer_id}`
         console.log(query);
         pool.query(query, (err, result) => {
