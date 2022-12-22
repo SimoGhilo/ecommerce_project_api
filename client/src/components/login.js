@@ -60,21 +60,11 @@ const Login = () => {
             alert('Invalid credentials');
         }
 
-        //TESTING ABOVE
-
-
-        // result = await result.json();
-        //console.log(result[0]);
-
-        /// Login not working, IT LOGS  EVERYONE IN
 
 
     }
 
 
-
-
-    /// Login implementation doesn't work
     return (
         <>
             <div>

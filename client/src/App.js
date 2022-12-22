@@ -12,6 +12,15 @@ import Stool from './components/products/stool'
 import Table from './components/products/table'
 import Deckchair from './components/products/deckchair'
 
+// retrieving the loginStatus from the Slice using redux
+
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+
+
+
+// Stripe and helpers
+
 import "@stripe/stripe-js";
 
 const linkStyles = {
@@ -30,7 +39,9 @@ const h1Styles = {
 
 function App() {
 
-  /// Is the below correct or the one in login.js?
+  // handling redux state
+  const dispatch = useDispatch();
+  const loginStatus = useSelector(state => state.isLoggedIn);
 
   const [loggedIn, setLoggedIn] = useState(false);
 
@@ -53,6 +64,8 @@ function App() {
     result.then((data) => {
       console.log(data.loggedIn);
       setLoggedIn(data.loggedIn);
+      console.log(loggedIn)
+      dispatch({ type: '/isLoggedIn/checkIfLoggedIn' });  // dispatch the component state change to redux state
     }).catch((error) => { console.log(error) })
 
 
@@ -62,32 +75,42 @@ function App() {
 
 
   return (
-    <div className="App">
-      <h1 className='title' style={h1Styles}><strong>E - Market</strong></h1>
-      <nav className="navbar">
-        <ul className='container'>
-          <li className='link'><Link style={linkStyles} to="/">Home</Link></li>
-          <li className='link'><Link style={linkStyles} to="/register">Register</Link></li>
-          <li className='link'><Link style={linkStyles} to="/login">Log in</Link></li>
-          <li className='link'><Link style={linkStyles} to="/products">Products</Link></li>
-          <li className='link'><Link style={linkStyles} to="/carts">View cart</Link></li>
-          {/* <li><Link to="/logout">Logout</Link></li> */}
-        </ul>
-      </nav>
-      <Routes>
-        <Route path='/' element={<Dashboard />} />
-        <Route path='/products' element={<Products />} />
-        <Route path='/login' element={<Login />} />
-        <Route path='/register' element={<Register />} />
-        <Route path='/carts' element={<Cart />} />
-        <Route path='/carts/:id/checkout' element={<Checkout />} />
-        <Route path='/logout' element={<Login />} />
-        <Route path='/products/deckchair' element={<Deckchair />} />
-        <Route path='/products/stool' element={<Stool />} />
-        <Route path='/products/table' element={<Table />} />
-        <Route path='*' element={<NotFound />} />
-      </Routes>
-    </div>
+    <>
+      <div className="App">
+        <h1 className='title' style={h1Styles}><strong>E - Market</strong></h1>
+        {/*loginStatus */ loggedIn && <nav className="navbar">
+          <ul className='container'>
+            <li className='link'><Link style={linkStyles} to="/">Home</Link></li>
+            <li className='link'><Link style={linkStyles} to="/products">Products</Link></li>
+            <li className='link'><Link style={linkStyles} to="/carts">View cart</Link></li>
+            {/* <li><Link to="/logout">Logout</Link></li> */}
+          </ul>
+        </nav>
+        }
+        {/*!loginStatus */ !loggedIn &&
+          <nav className="navbar">
+            <ul className='container'>
+              <li className='link'><Link style={linkStyles} to="/">Home</Link></li>
+              <li className='link'><Link style={linkStyles} to="/register">Register</Link></li>
+              <li className='link'><Link style={linkStyles} to="/login">Log in</Link></li>
+            </ul>
+          </nav>
+        }
+        <Routes>
+          <Route path='/' element={<Dashboard />} />
+          <Route path='/products' element={<Products />} />
+          <Route path='/login' element={<Login />} />
+          <Route path='/register' element={<Register />} />
+          <Route path='/carts' element={<Cart />} />
+          <Route path='/carts/:id/checkout' element={<Checkout />} />
+          <Route path='/logout' element={<Login />} />
+          <Route path='/products/deckchair' element={<Deckchair />} />
+          <Route path='/products/stool' element={<Stool />} />
+          <Route path='/products/table' element={<Table />} />
+          <Route path='*' element={<NotFound />} />
+        </Routes>
+      </div>
+    </>
   );
 }
 
