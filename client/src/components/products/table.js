@@ -1,3 +1,4 @@
+import "../styles/items.css";
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -25,7 +26,7 @@ const Table = () => {
         <div>
             <h1 style={h1Styles}>Table</h1>
             <br />
-            <img src="../media/table.jpg" />
+            <img src="https://images.unsplash.com/photo-1601628828688-632f38a5a7d0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=709&q=80" />
             <h2>Specifications:</h2>
             <p>Height: 45" </p>
             <p>Width:   275"</p>

@@ -55,7 +55,10 @@ function App() {
       headers: {
         'Content-type': 'application/json',
         'Accept': 'application/json'
-      }
+      },
+      mode: 'cors',
+      cache: 'no-cache',
+      credentials: 'include'
     })
 
     result = result.json();
@@ -129,7 +132,7 @@ function App() {
             <Route path='/register' element={<Navigate to={'/'} />} />
             <Route path='/carts' element={<Cart />} />
             <Route path='/carts/:id/checkout' element={<Checkout />} />
-            { /* <Route path='/logout' element={<Login />} /> */}
+            <Route path='/logout' element={<Login />} />
             <Route path='/products/deckchair' element={<Deckchair />} />
             <Route path='/products/stool' element={<Stool />} />
             <Route path='/products/table' element={<Table />} />

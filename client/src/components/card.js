@@ -1,3 +1,4 @@
+import './styles/card.css';
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -64,9 +65,9 @@ const Card = (props) => {
 
     const paths = {
         empty: '',
-        deckchair: "./media/deckchair.jpg",
-        stool: "./media/stool.jpg",
-        table: "./media/table.jpg"
+        deckchair: "https://images.unsplash.com/photo-1513681929100-fa03b42121d5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8ZGVja2NoYWlyfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60",
+        stool: "https://images.unsplash.com/photo-1625418419248-54a6a90c6776?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OXx8c3Rvb2x8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60",
+        table: "https://images.unsplash.com/photo-1601628828688-632f38a5a7d0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=709&q=80"
     }
 
 
@@ -190,7 +191,7 @@ const Card = (props) => {
     return (
         <>
             <p>{titleCase(name)}</p>
-            <img src={paths[props.name]} />
+            <img className='image' src={paths[props.name]} />
             <p>Quantity:</p>
             <p><button style={buttonAmountStyle} onClick={useHandleIncrement}>+</button>{toggleQuantity}<button style={buttonAmountStyle} onClick={useHandleDecrement}>-</button></p>
             <h6>Price</h6>

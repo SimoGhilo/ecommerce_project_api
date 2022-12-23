@@ -18,3 +18,11 @@ input {
     margin-top: 1rem;
     margin-bottom: 5rem;
 }
+
+.google:hover {
+    cursor: pointer;
+}
+
+.google {
+    box-shadow: none;
+}

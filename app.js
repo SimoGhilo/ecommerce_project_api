@@ -7,6 +7,8 @@ const swaggerUi = require('swagger-ui-express');
 const yaml = require('js-yaml');
 const fs = require('fs');
 const path = require('path');
+
+
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const session = require('express-session');
@@ -266,10 +268,11 @@ app.get('/isLoggedIn', (req, res) => {
 });*/
 
 app.get('/isLoggedIn', (req, res) => {
-
+    console.log('In isLoggedIn', req.user);
     if (req.session?.passport?.user) {
 
         res.send({ loggedIn: true, user: req.session.passport.user });
+
 
     } else {
 
@@ -308,8 +311,30 @@ function notAuthenticated(req, res, next) {
     res.redirect('/login');
 }
 
+/*
+/// Google login
+
+app.get('/google', passport.authenticate('google', { scope: ['profile'] }));
+
+app.get('/google/callback',
+    passport.authenticate('google', { failureRedirect: '/login' }),
+    function (req, res) {
+        // Successful authentication, redirect home.
+        if (req.session?.passport?.user) {
+
+            res.send({ loggedIn: true, user: req.session.passport.user });
 
 
+        } else {
+
+            res.send({ loggedIn: false });
+
+        }
+        res.redirect('/');
+    });
+
+
+*/
 
 
 

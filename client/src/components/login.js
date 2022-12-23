@@ -16,6 +16,11 @@ const h1Styles = {
     marginBottom: "2rem",
 }
 
+const googleStyle = {
+    width: "6rem",
+
+}
+
 
 
 const Login = () => {
@@ -76,6 +81,28 @@ const Login = () => {
     }
 
 
+    /////////////   Google Login   //////////////
+
+    /*   async function googleLogin() {
+           const url = 'http://localhost:5000/google';
+           let result = await fetch(url, {
+               method: 'GET',
+               headers: {
+                   'Content-type': 'application/json',
+                   'Accept': 'application/json'
+               },
+               mode: 'cors',
+               cache: 'no-cache',
+               credentials: 'include'
+           })
+   
+           result = result.json();
+           return result;
+       }
+   
+       /// Still have to finish the function above as still working on normal login */
+
+
     return (
         <>
             <div>
@@ -93,6 +120,8 @@ const Login = () => {
                         onChange={(e) => setPassword(e.target.value)} required />
                 </div>
                 <button className="lower" type="submit" onClick={login}>Login</button>
+                <br />
+                <img className='google' style={googleStyle} src="https://cdn-icons-png.flaticon.com/512/888/888853.png" /* onClick={googleLogin}*/ />
                 <br />
                 <hr />
                 <p>Copyright 2022 E-Market</p>

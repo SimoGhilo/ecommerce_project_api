@@ -1,6 +1,7 @@
 const passport = require('passport');
 const bcrypt = require('bcrypt');
 const localStartegy = require('passport-local').Strategy;
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const pool = require('./database');
 
 
@@ -67,6 +68,19 @@ function initialize(passport) {
             return done(null, result.rows[0]);
         })
     })
+
+    /* // Google strategy
+ 
+     passport.use(new GoogleStrategy({
+         clientID: "265635454782-9r4qdopabuef86nj5d7bnn2vnqr5u929.apps.googleusercontent.com",
+         clientSecret: "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",
+         callbackURL: "http://localhost:5000/google/callback"
+     },   function(accessToken, refreshToken, profile, done) {
+        // Will have to query the database // 
+    User.findOrCreate({ googleId: profile.id }, function (err, user) {
+      return done(err, user);
+    });
+  }));  */
 
 }
 

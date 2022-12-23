@@ -5,11 +5,19 @@ img {
     margin-bottom: 1rem;
 }
 
+.product {
+  width: 75%;
+  z-index: 1;
+  box-shadow: rgb(160, 126, 247) 4px 4px 2px 2px;
+}
+
 .link {
     padding: 2rem;
     text-align: center;
     font-weight: bold;
     font-size: large;
+    z-index: 2;
+    position: relative;
     
   }
   

@@ -1,0 +1,8 @@
+h5:hover {
+        cursor: pointer;
+}
+
+img {
+        width: auto;
+        box-shadow: rgb(127, 80, 245) 4px 4px; 
+}

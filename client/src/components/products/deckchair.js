@@ -1,3 +1,4 @@
+import "../styles/items.css";
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -26,7 +27,7 @@ const Deckchair = () => {
         <div>
             <h1 style={h1Styles}>Deckchair</h1>
             <br />
-            <img src="../media/deckchair.jpg" />
+            <img src="https://images.unsplash.com/photo-1513681929100-fa03b42121d5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8ZGVja2NoYWlyfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60" />
             <h2>Specifications:</h2>
             <p>Height: 50" </p>
             <p>Width:   25"</p>
