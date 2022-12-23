@@ -73,7 +73,7 @@ function initialize(passport) {
  
      passport.use(new GoogleStrategy({
          clientID: "265635454782-9r4qdopabuef86nj5d7bnn2vnqr5u929.apps.googleusercontent.com",
-         clientSecret: "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",
+         clientSecret: process.env.GOOGLE_SECRET,
          callbackURL: "http://localhost:5000/google/callback"
      },   function(accessToken, refreshToken, profile, done) {
         // Will have to query the database // 
