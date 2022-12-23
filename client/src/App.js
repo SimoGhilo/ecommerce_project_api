@@ -1,6 +1,6 @@
 import './App.css';
 import Login from './components/login';
-import { Route, Routes, Link } from "react-router-dom"
+import { Route, Routes, Link, Redirect, Navigate } from "react-router-dom"
 import { useEffect, useState } from 'react';
 import Cart from './components/cart';
 import Register from './components/register';
@@ -16,12 +16,13 @@ import Deckchair from './components/products/deckchair'
 
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
+import { setLoginStatus } from './slice/loginSlice';
 
 
 
 // Stripe and helpers
 
-import "@stripe/stripe-js";
+// import "@stripe/stripe-js";
 
 const linkStyles = {
   textDecoration: "none",
@@ -41,9 +42,11 @@ function App() {
 
   // handling redux state
   const dispatch = useDispatch();
-  const loginStatus = useSelector(state => state.isLoggedIn);
+  let isLoggedIn = useSelector((state) => state.loginStatus.isLoggedIn);
+  console.log(isLoggedIn)
 
-  const [loggedIn, setLoggedIn] = useState(false);
+
+  // const [loggedIn, setLoggedIn] = useState(false);
 
   async function login() {
     const url = 'http://localhost:5000/isLoggedIn';
@@ -60,34 +63,55 @@ function App() {
   }
 
   useEffect(() => {
+    async function fetchLogin() {
+
+      let result = await login().then((result) => {
+        return result;
+      });
+      // console.log(result.loggedIn);
+      // setLoggedIn(result.loggedIn); // local status change
+      dispatch(setLoginStatus(result.loggedIn)) // redux state
+    }
+
+    fetchLogin();
+  }, [dispatch])
+
+  /*useEffect(() => {
     let result = login();
     result.then((data) => {
       console.log(data.loggedIn);
-      setLoggedIn(data.loggedIn);
       console.log(loggedIn)
-      dispatch({ type: '/isLoggedIn/checkIfLoggedIn' });  // dispatch the component state change to redux state
+      // dispatch(data.loggedIn);  // dispatch the component state change to redux state
+      //setLoggedIn(data.loggedIn);
     }).catch((error) => { console.log(error) })
 
 
-  }, []);
+    //ERROR HERE
+  }, []); */
 
+  async function logout() {
+    if (isLoggedIn) {
+      dispatch(setLoginStatus(false));
+    }
+  }
 
+  console.log(isLoggedIn)
 
 
   return (
     <>
       <div className="App">
         <h1 className='title' style={h1Styles}><strong>E - Market</strong></h1>
-        {/*loginStatus */ loggedIn && <nav className="navbar">
+        {isLoggedIn /* loggedIn */ && <nav className="navbar">
           <ul className='container'>
             <li className='link'><Link style={linkStyles} to="/">Home</Link></li>
             <li className='link'><Link style={linkStyles} to="/products">Products</Link></li>
             <li className='link'><Link style={linkStyles} to="/carts">View cart</Link></li>
-            {/* <li><Link to="/logout">Logout</Link></li> */}
+            <li className='link'><Link style={linkStyles} to="/logout" onClick={logout}>Logout</Link></li>
           </ul>
         </nav>
         }
-        {/*!loginStatus */ !loggedIn &&
+        {!isLoggedIn /*!loggedIn*/ &&
           <nav className="navbar">
             <ul className='container'>
               <li className='link'><Link style={linkStyles} to="/">Home</Link></li>
@@ -96,19 +120,37 @@ function App() {
             </ul>
           </nav>
         }
-        <Routes>
-          <Route path='/' element={<Dashboard />} />
-          <Route path='/products' element={<Products />} />
-          <Route path='/login' element={<Login />} />
-          <Route path='/register' element={<Register />} />
-          <Route path='/carts' element={<Cart />} />
-          <Route path='/carts/:id/checkout' element={<Checkout />} />
-          <Route path='/logout' element={<Login />} />
-          <Route path='/products/deckchair' element={<Deckchair />} />
-          <Route path='/products/stool' element={<Stool />} />
-          <Route path='/products/table' element={<Table />} />
-          <Route path='*' element={<NotFound />} />
-        </Routes>
+
+        {isLoggedIn &&
+          <Routes>
+            <Route path='/' element={<Dashboard />} />
+            <Route path='/products' element={<Products />} />
+            <Route path='/login' element={<Navigate to={'/'} />} />
+            <Route path='/register' element={<Navigate to={'/'} />} />
+            <Route path='/carts' element={<Cart />} />
+            <Route path='/carts/:id/checkout' element={<Checkout />} />
+            { /* <Route path='/logout' element={<Login />} /> */}
+            <Route path='/products/deckchair' element={<Deckchair />} />
+            <Route path='/products/stool' element={<Stool />} />
+            <Route path='/products/table' element={<Table />} />
+            <Route path='*' element={<NotFound />} />
+          </Routes>
+        }
+        {!isLoggedIn &&
+          <Routes>
+            <Route path='/' element={<Navigate to={'/login'} />} />
+            <Route path='/products' element={<Navigate to={'/login'} />} />
+            <Route path='/login' element={<Login />} />
+            <Route path='/register' element={<Register />} />
+            <Route path='/carts' element={<Navigate to={'/login'} />} />
+            <Route path='/carts/:id/checkout' element={<Navigate to={'/login'} />} />
+            {/*<Route path='/logout' element={<Login />} /> */}
+            <Route path='/products/deckchair' element={<Navigate to={'/login'} />} />
+            <Route path='/products/stool' element={<Navigate to={'/login'} />} />
+            <Route path='/products/table' element={<Navigate to={'/login'} />} />
+            <Route path='*' element={<NotFound />} />
+          </Routes>
+        }
       </div>
     </>
   );

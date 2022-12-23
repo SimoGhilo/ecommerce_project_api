@@ -4,17 +4,17 @@ import { createSlice } from '@reduxjs/toolkit'
 let initialState = { isLoggedIn: false };
 
 
-const loginSlice = createSlice({
-    name: 'isLoggedIn',
+const loginStatusSlice = createSlice({
+    name: 'loginStatus',
     initialState: initialState,
     reducers: {
-        checkIfLoggedIn: (state, action) => { if (state.isLoggedIn === true) { return true; } else { return false; } },
-
-        toggleLoggedIn: (state, action) => { if (state.isLoggedIn === false) { return true; } else { return false; } }
-    }
+        setLoginStatus: (state, action) => {
+            state.isLoggedIn = action.payload;
+        },
+    },
 });
 
 
-const { checkIfLoggedIn, toggleLoggedIn } = loginSlice.actions;
-export { checkIfLoggedIn, toggleLoggedIn };
-export default loginSlice.reducer;
+const { setLoginStatus } = loginStatusSlice.actions;
+export { setLoginStatus };
+export default loginStatusSlice.reducer;

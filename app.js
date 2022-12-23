@@ -238,7 +238,7 @@ app.post('/carts/:id/checkout', (req, res) => {
 app.post('/login', passport.authenticate('local', {
 
 }), (req, res) => {
-    //console.log(req.session.passport.user);
+    // console.log(req.session);
     if (req.session.passport.user) {
         res.send({ loggedIn: true, customer: req.session.passport.user });
     } else {
@@ -253,15 +253,29 @@ app.post('/login', passport.authenticate('local', {
 
 // Maintain the session in App.js
 
+///ERROR HERE
+/*
 app.get('/isLoggedIn', (req, res) => {
-    //console.log(req.session.passport.user);
-    if (req.session.passport.user) {
-        res.send({ loggedIn: true, customer: req.session.passport.user });
+
+    if (req.session) {
+        res.send({ loggedIn: true });
     } else {
         res.send({ loggedIn: false });
     }
 
+});*/
 
+app.get('/isLoggedIn', (req, res) => {
+
+    if (req.session?.passport?.user) {
+
+        res.send({ loggedIn: true, user: req.session.passport.user });
+
+    } else {
+
+        res.send({ loggedIn: false });
+
+    }
 
 });
 

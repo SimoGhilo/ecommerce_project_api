@@ -3,6 +3,10 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import bcrypt from 'bcryptjs'
 
+import { useDispatch, useSelector } from 'react-redux';
+import { setLoginStatus } from '../slice/loginSlice';
+
+
 
 // helper functions & styles
 
@@ -16,7 +20,11 @@ const h1Styles = {
 
 const Login = () => {
 
-    const [loggedIn, setLoggedIn] = useState(false);
+    // handling redux state
+    const dispatch = useDispatch();
+    let isLoggedIn = useSelector(state => state.loginStatus.isLoggedIn); // Redux login
+
+    const [loggedIn, setLoggedIn] = useState(false); // local login state
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
@@ -24,9 +32,12 @@ const Login = () => {
 
     useEffect(() => {
         if (loggedIn) {
+            dispatch(setLoginStatus(true))
             navigate('/');
         }
-    })
+    }, [loggedIn, dispatch, navigate])
+
+
 
 
     async function login() {
@@ -49,7 +60,7 @@ const Login = () => {
 
 
         if (result.status === 200) {
-            console.log('logged in');
+            //    console.log('logged in');
             const data = await result.json();
             // set state to logged in
             setLoggedIn(data.loggedIn);;

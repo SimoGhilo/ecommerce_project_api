@@ -21,12 +21,12 @@ function initialize(passport) {
             if (result.rows.length > 0) {
 
                 const customer = result.rows[0];
-                console.log('password comparison', customer_password, customer.customer_password);
+                // console.log('password comparison', customer_password, customer.customer_password);
                 bcrypt.compare(customer_password, customer.customer_password, (error, isMatch) => {
 
                     if (error) throw error
 
-                    console.log('In passport is Match:', isMatch)
+                    // console.log('In passport is Match:', isMatch)
                     if (isMatch) {
 
                         return done(null, customer)
@@ -54,7 +54,7 @@ function initialize(passport) {
     }, authenticateCustomer));
 
     passport.serializeUser((customer_id, done) => {
-        console.log('serialzinging yser', customer_id);
+        // console.log('serialzinging yser', customer_id);
         done(null, customer_id)
     });
 
