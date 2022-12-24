@@ -79,24 +79,42 @@ function App() {
     fetchLogin();
   }, [dispatch])
 
-  /*useEffect(() => {
-    let result = login();
-    result.then((data) => {
-      console.log(data.loggedIn);
-      console.log(loggedIn)
-      // dispatch(data.loggedIn);  // dispatch the component state change to redux state
-      //setLoggedIn(data.loggedIn);
-    }).catch((error) => { console.log(error) })
-
-
-    //ERROR HERE
-  }, []); */
 
   async function logout() {
+    let url = 'http://localhost:5000/logout';
+    /*  const object = {
+        email: email,
+        customer_password: password
+      } */
+    let result = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json',
+        'Accept': 'application/json'
+      },
+      mode: 'cors',
+      cache: 'no-cache',
+      credentials: 'include',
+      // body: JSON.stringify(object)
+    })
+
+    /// Unsure of the below
+    if (result.status === 200) {
+      const data = await result.json();
+      dispatch(setLoginStatus(data.loggedIn))
+    } else {
+      console.log('error ', result.status)
+    }
+
+  }
+
+
+  async function handleLogout() {
     if (isLoggedIn) {
       dispatch(setLoginStatus(false));
     }
   }
+
 
   console.log(isLoggedIn)
 

@@ -286,9 +286,12 @@ app.get('/isLoggedIn', (req, res) => {
 
 app.post('/logout', (req, res, next) => {
 
-    req.logout();
-    if (error) { return next(error); }
-    res.redirect('/login')
+    req.logout(function (err) {
+        if (err) {
+            return next(err);
+        }
+        res.redirect('/login');
+    });
 
 });
 
