@@ -60,6 +60,9 @@ const Login = () => {
                 'Content-type': 'application/json',
                 'Accept': 'application/json'
             },
+            mode: 'cors',
+            cache: 'no-cache',
+            credentials: 'include',
             body: JSON.stringify(object)
         });
 
@@ -68,7 +71,8 @@ const Login = () => {
             //    console.log('logged in');
             const data = await result.json();
             // set state to logged in
-            setLoggedIn(data.loggedIn);;
+            setLoggedIn(data.loggedIn);
+            dispatch(setLoginStatus(data.loggedIn))
         }
 
         else {

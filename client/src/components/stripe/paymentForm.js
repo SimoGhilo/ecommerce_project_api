@@ -29,7 +29,7 @@ const PaymentForm = () => {
 
             if (response.data.success) {
 
-                /// Here 
+                // here 
             }
         } catch (e) {
             console.log(e);
