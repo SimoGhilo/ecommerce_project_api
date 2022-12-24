@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import Order from './order';
 
 
 const Checkout = () => {
-
+    const dispatch = useDispatch();
+    let user = useSelector((state) => state.loginStatus.isLoggedIn);
     const [orders, setOrders] = useState([]);
     console.log(orders);
 
     useEffect(() => {
-        fetch('http://localhost:5000/orders').then((response) => {
+        fetch('http://localhost:5000/orders/' + user.customer_id).then((response) => {
             response.json().then((data) => {
                 setOrders(data);
             });

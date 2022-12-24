@@ -15,7 +15,7 @@ const getOrders = async (req, res) => {
 const getOrderById = async (req, res) => {
     const id = parseInt(req.params.id);
     try {
-        await pool.query(`select * from orders where id=${id.toString()}`, (err, result) => {
+        await pool.query(`select * from orders where customer_id=${id.toString()}`, (err, result) => {
             res.status(200).json(result.rows)
         });
     } catch (err) {

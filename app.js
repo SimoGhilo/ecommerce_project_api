@@ -206,7 +206,7 @@ app.post('/carts/:id/checkout', (req, res) => {
         // if ther is a cart
         if (cart.length > 0) {
 
-            pool.query(`insert into orders(customer_id,amount,order_status,cart_id,product_id) values(${customer_id},${price},'fulfilled',${id.toString()},${product_id})`, (err, result) => {
+            pool.query(`insert into orders(customer_id,amount,order_status,cart_id,product_id,quantity) values(${customer_id},${price},'fulfilled',${id.toString()},${product_id},${quantity})`, (err, result) => {
                 if (err) throw err
 
                 res.status(200).send(result.rows);

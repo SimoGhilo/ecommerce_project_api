@@ -43,6 +43,7 @@ function App() {
   // handling redux state
   const dispatch = useDispatch();
   let isLoggedIn = useSelector((state) => state.loginStatus.isLoggedIn);
+
   console.log(isLoggedIn)
 
 

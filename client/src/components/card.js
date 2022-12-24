@@ -1,6 +1,7 @@
 import './styles/card.css';
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 
 // Stripe
 /*import { loadStripe } from '@stripe/stripe-js';
@@ -27,6 +28,7 @@ function titleCase(string) {
 const Card = (props) => {
 
     const navigate = useNavigate();
+    const { refetch, setReFetch } = props
 
     // stripe objects
     /*
@@ -89,7 +91,8 @@ const Card = (props) => {
         height: "1.2rem",
         width: "0.5rem"
     }
-
+    const dispatch = useDispatch();
+    let user = useSelector((state) => state.loginStatus.isLoggedIn);
     // const [cart_id, setCart_id] = useState(0);
     const [toggleQuantity, setToggleQuantity] = useState(props.quantity);
     const [togglePrice, setTogglePrice] = useState(props.price);
@@ -99,7 +102,7 @@ const Card = (props) => {
     let quantity = props.quantity;
     let name = props.name;
     let price = props.price;
-    let customer_id = props.customer_id;
+    let customer_id = user.customer_id;
 
     useEffect(() => {
         if ((toggleQuantity || togglePrice) <= 0) {
@@ -121,10 +124,10 @@ const Card = (props) => {
 
     }
 
-    function handleRemove() {
-
-        removeFromCart(props.cart_id)
-    };
+    /* function handleRemove() {
+ 
+         removeFromCart(props.cart_id)
+     };*/
     /// Removing an item from the cart, does not work
 
     // console.log(cart_id);
@@ -134,14 +137,26 @@ const Card = (props) => {
         const url = `http://localhost:5000/carts/${cart_id}`
         await fetch(url, {
             method: 'DELETE',
-            success: function () {
+            /*    success: function () {
+                    alert('Item removed successfully')
+                    setReFetch(refetch + 1)
+    
+                    console.log(refetch)
+                },
+                error: function () {
+                    alert('Error removing item')
+                } */
+
+        }).then(res => {
+            if (res.status) {
                 alert('Item removed successfully')
-            },
-            error: function () {
+                setReFetch(refetch + 1)
+
+                console.log(refetch)
+            } else {
                 alert('Error removing item')
             }
-
-        });
+        })
     }
 
     async function handleCheckout() {
@@ -196,7 +211,7 @@ const Card = (props) => {
             <p><button style={buttonAmountStyle} onClick={useHandleIncrement}>+</button>{toggleQuantity}<button style={buttonAmountStyle} onClick={useHandleDecrement}>-</button></p>
             <h6>Price</h6>
             <p>£ {togglePrice * toggleQuantity}</p>
-            <button onClick={handleRemove}>Remove from your cart</button>
+            <button onClick={() => removeFromCart(props.cart_id)}>Remove from your cart</button>
             <br />
             <p>Complete payment:</p>
             <button type="submit" name="payment" onClick={handleCheckout} /* stripe checkout onClick={redirectToCheckout}*/ >Pay Now</button>

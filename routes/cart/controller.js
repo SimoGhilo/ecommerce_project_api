@@ -54,12 +54,14 @@ const deleteCartById = (req, res) => {
     pool.query(`select * from cart where cart_id=${id.toString()}`, (err, result) => {
         const notFound = !result.rows.length;
         if (notFound) {
-            res.send('cart does not exist in the database');
+            console.log("Hello")
+            res.send({ message: 'Cart not found' });
         }
 
         pool.query(`delete from cart where cart_id=${id.toString()}`, (err, result) => {
             if (err) throw err;
-            res.status(200).send('cart removed successfully');
+            console.log("Hello 2")
+            res.status(200).send(result);
         });
     })
 }
@@ -71,21 +73,25 @@ const updateCartById = (req, res) => {
 
     pool.query(`select * from cart where cart_id=${id.toString()}`, (err, result) => {
         const notFound = !result.rows.length;
-        if (notFound) {
-            res.send('cart does not exist in the database');
-        }
-
-
+        // if (notFound) {
+        //     // res.send('cart does not exist in the database');
+        // }
         const updateQueryString = `update cart set product_id='${product_id}', quantity='${quantity}' where cart_id='${id}';`;
         pool.query(updateQueryString,
             (err, result) => {
+
                 if (err) {
                     console.log(err);
                     throw err;
                 }
-                res.status(200).send('cart updated successfully');
+                console.log(result);
+                res.status(200).send({ message: 'cart updated successfully' });
             });
+
+
+
     })
+
 }
 
 

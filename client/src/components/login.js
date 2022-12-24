@@ -71,8 +71,10 @@ const Login = () => {
             //    console.log('logged in');
             const data = await result.json();
             // set state to logged in
+            console.log(data)
+            const user = { customer_id: data.customer.customer_id, email: data.customer.email, loggedIn: data.loggedIn }
             setLoggedIn(data.loggedIn);
-            dispatch(setLoginStatus(data.loggedIn))
+            dispatch(setLoginStatus(user))
         }
 
         else {
