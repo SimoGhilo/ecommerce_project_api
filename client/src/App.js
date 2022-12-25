@@ -10,7 +10,8 @@ import Dashboard from './components/dashboard';
 import Checkout from './components/checkout';
 import Stool from './components/products/stool'
 import Table from './components/products/table'
-import Deckchair from './components/products/deckchair'
+import Deckchair from './components/products/deckchair';
+import Orders from './components/orders';
 
 // retrieving the loginStatus from the Slice using redux
 
@@ -130,6 +131,7 @@ function App() {
             <li className='link'><Link style={linkStyles} to="/products">Products</Link></li>
             <li className='link'><Link style={linkStyles} to="/carts">View cart</Link></li>
             <li className='link'><Link style={linkStyles} to="/logout" onClick={logout}>Logout</Link></li>
+            <li className='link'><Link style={linkStyles} to="/orders">view orders</Link></li>
           </ul>
         </nav>
         }
@@ -155,6 +157,7 @@ function App() {
             <Route path='/products/deckchair' element={<Deckchair />} />
             <Route path='/products/stool' element={<Stool />} />
             <Route path='/products/table' element={<Table />} />
+            <Route path='/orders' element={<Orders />} />
             <Route path='*' element={<NotFound />} />
           </Routes>
         }

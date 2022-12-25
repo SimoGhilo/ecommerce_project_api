@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import Card from './card'
 import './styles/cart.css';
 
 
 const Cart = () => {
+
+    // redux state
+    let user = useSelector((state) => state.loginStatus.isLoggedIn);
 
 
     let [carts, setCarts] = useState([]);
@@ -29,7 +33,7 @@ const Cart = () => {
                 {
 
                     carts.map((cart) => (
-                        <div key={cart.cart_id}>
+                        user.customer_id === cart.customer_id && <div key={cart.cart_id}>
                             <div>
                                 <div className='cart' >
                                     <Card setReFetch={setReFetch} refetch={refetch} quantity={cart.quantity} cart_id={cart.cart_id} product_id={cart.product_id} name={cart.name} price={cart.price} customer_id={cart.customer_id} />

@@ -2,6 +2,7 @@ import './styles/card.css';
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import StripeContainer from './stripe/stripeContainer';
 
 // Stripe
 /*import { loadStripe } from '@stripe/stripe-js';
@@ -216,6 +217,7 @@ const Card = (props) => {
             <p>Complete payment:</p>
             <button type="submit" name="payment" onClick={handleCheckout} /* stripe checkout onClick={redirectToCheckout}*/ >Pay Now</button>
             <br />
+            <StripeContainer amount={togglePrice * toggleQuantity} />
         </>
     );
 };

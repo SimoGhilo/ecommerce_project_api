@@ -15,6 +15,12 @@ const session = require('express-session');
 const bcrypt = require('bcrypt');
 const passport = require('passport');
 
+/// Stripe
+
+const stripe = require('stripe')("sk_test_51MGghLEhCjW3jh5VB0Ja8JLnWthkZMiRlTtXpqYATz79hIzfBzVic8WRbt9qkwDSxGANMtLTH4kUBoYwRr6flZ4u00aIh51NoA");
+//console.log(stripe)
+//console.log(process.env.STRIPE_SECRET_TEST);
+
 const initializePassport = require('./passport');
 
 initializePassport(passport);
@@ -108,6 +114,7 @@ app.use('/carts', cartRouter);
 
 const orderRouter = require('./routes/order/order');
 const pool = require('./database');
+const { getProductById } = require('./routes/product/controller');
 app.use('/orders', orderRouter);
 
 
@@ -247,25 +254,9 @@ app.post('/login', passport.authenticate('local', {
         res.send({ loggedIn: false });
     }
 
-    // console.log(req.session, 'testing session');
-    // res.send({ message: 'Logged in successfully' });
-
-
 });
 
-// Maintain the session in App.js
 
-///ERROR HERE
-/*
-app.get('/isLoggedIn', (req, res) => {
-
-    if (req.session) {
-        res.send({ loggedIn: true });
-    } else {
-        res.send({ loggedIn: false });
-    }
-
-});*/
 
 app.get('/isLoggedIn', (req, res) => {
     console.log('In isLoggedIn', req.user);
@@ -313,6 +304,35 @@ function notAuthenticated(req, res, next) {
 
     res.redirect('/login');
 }
+
+// Stripe 
+
+app.post('/payment', cors(), async (req, res) => {
+    let { amount, id } = req.body;
+    try {
+        const payment = await stripe.paymentIntents.create({
+            amount,
+            currency: "GBP",
+            description: "Furniture company",
+            payment_method: id,
+            confirm: true,
+        })
+
+        console.log("Payment", payment)
+        res.json({
+            message: "Payment successful",
+            success: true
+        })
+    } catch (error) {
+
+        console.log("Error", error);
+        res.json({
+            message: "Payment failed",
+            success: false
+        })
+
+    }
+})
 
 /*
 /// Google login

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import './styles/product.css';
 
@@ -19,21 +20,10 @@ const links = {
 
 const Product = (props) => {
 
-    // helper functions
+    // redux sate
 
-    let src = ''
-
-    if (props.name === 'deckchair') {
-        src = "./media/deckchair.jpg";
-    }
-
-    if (props.name === 'stool') {
-        src = "./media/stool.jpg";
-    }
-
-    if (props.name === 'table') {
-        src = "./media/table.jpg";
-    }
+    // const dispatch = useDispatch();
+    let user = useSelector((state) => state.loginStatus.isLoggedIn);
 
     function titleCase(string) {
         return string[0].toUpperCase() + string.slice(1).toLowerCase();
@@ -45,7 +35,7 @@ const Product = (props) => {
             cart_id: ((Math.random()) * 100 + (Math.random()) * 100) / 2,
             product_id: props.product_id,
             quantity: 1,
-            customer_id: 13 /// will change later, FK to be added in Postgres?
+            customer_id: user.customer_id,
         }
         const result = await fetch(url, {
             method: 'POST',
