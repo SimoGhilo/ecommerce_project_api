@@ -25,7 +25,11 @@ const CARD_OPTIONS = {
 
 const PaymentForm = (props) => {
 
-    const { amount } = props;
+    const { amount, name, cart_id } = props;
+
+    const { handleCheckout, checkout } = props;
+
+    const { checkeout, setCheckeout } = props;
 
     const [success, setSuccess] = useState(false);
 
@@ -44,11 +48,13 @@ const PaymentForm = (props) => {
                 const { id } = paymentMethod
                 const response = await axios.post("http://localhost:5000/payment", {
                     amount: amount * 100,
+                    customer: name,
                     id: id,
                 })
 
                 if (response.data.success) {
 
+                    handleCheckout()
                     console.log("Payment successful");
                     setSuccess(true)
                 }

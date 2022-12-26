@@ -13,9 +13,12 @@ const stripeTestPromise = loadStripe(PUBLIC_KEY);
 const StripeContainer = (props) => {
 
     const { amount } = props;
+    const { name, cart_id } = props;
+    const { handleCheckout, checkout } = props;
+    const { checkedout, setCheckedout } = props;
     return (
         <Elements stripe={stripeTestPromise}>
-            <PaymentForm amount={amount} />
+            <PaymentForm amount={amount} name={name} cart_id={cart_id} handleCheckout={handleCheckout} checkout={checkout} checkedout={checkedout} setCheckedOut={setCheckedout} />
         </Elements>
     );
 };

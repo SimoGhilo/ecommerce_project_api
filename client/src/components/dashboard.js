@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import Products from './products';
 import './styles/dashboard.css';
 
@@ -10,8 +11,16 @@ const h1Styles = {
     marginBottom: "2rem",
 }
 const Dashboard = () => {
+
+
+    // redux state
+    let user = useSelector((state) => state.loginStatus.isLoggedIn);
+
+
     return (
         <div>
+            <br />
+            <h2 style={h1Styles}>Welcome {user.name}</h2>
             <br />
             <header>
                 <h1 style={h1Styles}>Our history</h1>

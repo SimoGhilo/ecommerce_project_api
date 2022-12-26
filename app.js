@@ -250,6 +250,7 @@ app.post('/login', passport.authenticate('local', {
     // console.log(req.session);
     if (req.session.passport.user) {
         res.send({ loggedIn: true, customer: req.session.passport.user });
+        //console.log(req.session.passport.user);
     } else {
         res.send({ loggedIn: false });
     }
@@ -263,6 +264,7 @@ app.get('/isLoggedIn', (req, res) => {
     if (req.session?.passport?.user) {
 
         res.send({ loggedIn: true, user: req.session.passport.user });
+
 
 
     } else {
