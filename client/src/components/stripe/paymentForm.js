@@ -81,6 +81,7 @@ const PaymentForm = (props) => {
                                 <CardElement options={CARD_OPTIONS} />
                             </div>
                         </fieldset>
+                        <br />
                         <button>Pay with Stripe</button>
                     </form>)
                     :

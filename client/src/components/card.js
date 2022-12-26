@@ -215,7 +215,7 @@ const Card = (props) => {
             <button onClick={() => removeFromCart(props.cart_id)}>Remove from your cart</button>
             <br />
             <p>Complete payment:</p>
-            <button type="submit" name="payment" onClick={handleCheckout} /* stripe checkout onClick={redirectToCheckout}*/ >Pay Now</button>
+            { /*<button type="submit" name="payment" onClick={handleCheckout} stripe checkout onClick={redirectToCheckout} >Pay Now</button> */}
             <br />
             <StripeContainer amount={togglePrice * toggleQuantity} name={props.name} handleCheckout={handleCheckout} checkout={checkout} cart_id={props.cart_id} checkedout={checkedout} setCheckedOut={setCheckedOut} />
         </>
