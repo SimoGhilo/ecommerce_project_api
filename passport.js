@@ -1,7 +1,8 @@
 const passport = require('passport');
 const bcrypt = require('bcrypt');
 const localStartegy = require('passport-local').Strategy;
-const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const GoogleStrategy = require('passport-google-oauth2').Strategy;
+const GooglePlusTokenStrategy = require('passport-google-plus-token');
 const pool = require('./database');
 
 
@@ -69,18 +70,36 @@ function initialize(passport) {
         })
     })
 
-    /* // Google strategy
- 
-     passport.use(new GoogleStrategy({
-         clientID: "265635454782-9r4qdopabuef86nj5d7bnn2vnqr5u929.apps.googleusercontent.com",
-         clientSecret: process.env.GOOGLE_SECRET,
-         callbackURL: "http://localhost:5000/google/callback"
-     },   function(accessToken, refreshToken, profile, done) {
+    // Google strategy
+
+    passport.use('googleToken', new GooglePlusTokenStrategy({
+        clientID: "265635454782-8tkv7on6vmqrvotjndr1h5qjcl374ir4.apps.googleusercontent.com",
+        clientSecret: "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 ",
+        callbackURL: "http://localhost:5000/google/callback"
+    }, async (accessToken, refreshToken, profile, done) => {
         // Will have to query the database // 
-    User.findOrCreate({ googleId: profile.id }, function (err, user) {
-      return done(err, user);
-    });
-  }));  */
+        customer_email = profile.emails[0].value;
+        console.log(accessToken)
+        pool.query(`select * from customers where email='${customer_email}'`, (err, result) => {
+
+            if (err) { throw err }
+
+            // If the customer is in the database
+            if (result.rows.length > 0) {
+
+                const customer = result.rows[0];
+                return done(null, customer, accessToken)
+            }
+            // If the customer is not in the database
+            else {
+
+                return done(null, false);
+            }
+        });
+
+
+    }));
+
 
 }
 

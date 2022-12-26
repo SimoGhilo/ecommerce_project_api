@@ -336,31 +336,20 @@ app.post('/payment', cors(), async (req, res) => {
     }
 })
 
-/*
+
 /// Google login
 
-app.get('/google', passport.authenticate('google', { scope: ['profile'] }));
+app.post('/google', passport.authenticate('googleToken', { session: true }));
 
-app.get('/google/callback',
-    passport.authenticate('google', { failureRedirect: '/login' }),
-    function (req, res) {
-        // Successful authentication, redirect home.
-        if (req.session?.passport?.user) {
+app.post('/google/callback', passport.authenticate('googleToken'), function (req, res) {
+    // Return user back to client
+    if (req.user) {
+        res.send({ loggedIn: true, customer: req.session.passport.user, access_token: req.session.passport.accessToken });
+    } else {
+        res.send({ loggedIn: false });
+    }
 
-            res.send({ loggedIn: true, user: req.session.passport.user });
-
-
-        } else {
-
-            res.send({ loggedIn: false });
-
-        }
-        res.redirect('/');
-    });
-
-
-*/
-
+});
 
 
 app.listen(PORT, (error) => {

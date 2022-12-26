@@ -2,6 +2,7 @@ import './styles/login.css';
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import bcrypt from 'bcryptjs'
+import GoogleLogin from 'react-google-login';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { setLoginStatus } from '../slice/loginSlice';
@@ -41,8 +42,6 @@ const Login = () => {
             navigate('/');
         }
     }, [loggedIn, dispatch, navigate])
-
-
 
 
     async function login() {
@@ -89,24 +88,32 @@ const Login = () => {
 
     /////////////   Google Login   //////////////
 
-    /*   async function googleLogin() {
-           const url = 'http://localhost:5000/google';
-           let result = await fetch(url, {
-               method: 'GET',
-               headers: {
-                   'Content-type': 'application/json',
-                   'Accept': 'application/json'
-               },
-               mode: 'cors',
-               cache: 'no-cache',
-               credentials: 'include'
-           })
-   
-           result = result.json();
-           return result;
-       }
-   
-       /// Still have to finish the function above as still working on normal login */
+    async function googleLogin() {
+        const url = 'http://localhost:5000/google/callback';
+        //let object = 
+        let result = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-type': 'application/json',
+                'Accept': 'application/json',
+                'Access-Control-Allow-Origin': 'http://localhost:5000'
+            },
+            mode: 'cors',
+            cache: 'no-cache',
+            credentials: 'include',
+            body: JSON.stringify({ access_token: "ya29.a0AX9GBdW_GhztFmnXn-UxPY9CYeua7E-4OnxFyMbTSvDHmx13CF1xp1Db9Rs9iQIxHYkF8BOh19pjz7ZRgWDxFjVr0TyPkUf87jS6wiNuXg7B5t7akhi2lr7zdjxCTylwE8wHX5zbHw80vc_Wm-30SOoYhMrWaCgYKAaYSARMSFQHUCsbCY87x4ZM6q82EhHc5gzdW2w0163" })
+
+        },)
+
+
+        // result = result.json();
+        console.log(result)
+        return result;
+        /// Working on google log in here *******
+
+    }
+
+
 
 
     return (
@@ -127,7 +134,21 @@ const Login = () => {
                 </div>
                 <button className="lower" type="submit" onClick={login}>Login</button>
                 <br />
-                <img className='google' style={googleStyle} src="https://cdn-icons-png.flaticon.com/512/888/888853.png" /* onClick={googleLogin}*/ />
+                { /* <div id="signinButton">
+                    <span class="g-signin"
+                        data-scope="https://www.googleapis.com/auth/plus.login"
+                        data-clientid="265635454782-8tkv7on6vmqrvotjndr1h5qjcl374ir4.apps.googleusercontent.com"
+                        data-redirecturi="postmessage"
+                        data-accesstype="offline"
+                        data-cookiepolicy="single_host_origin"
+                        data-callback="signInCallback">
+                    </span>
+                </div>
+                <div id="result">
+                    <img className='google' style={googleStyle} src="https://cdn-icons-png.flaticon.com/512/888/888853.png" onClick={googleLogin} />
+    </div> */}
+                {/*<div id='SignInDiv'></div>*/}
+                <img className='google' style={googleStyle} src="https://cdn-icons-png.flaticon.com/512/888/888853.png" onClick={googleLogin} />
                 <br />
                 <hr />
                 <p>Copyright 2022 E-Market</p>
