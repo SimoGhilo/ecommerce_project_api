@@ -72,46 +72,46 @@ function initialize(passport) {
 
     // Google plus token strategy
 
-    passport.use('googleToken', new GooglePlusTokenStrategy({
-        clientID: "265635454782-8tkv7on6vmqrvotjndr1h5qjcl374ir4.apps.googleusercontent.com",
-        clientSecret: "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",
-        callbackURL: "http://localhost:5000/google/callback"
-    }, async (accessToken, refreshToken, profile, done) => {
-        // Will have to query the database // 
-        customer_email = profile.emails[0].value;
-        console.log(accessToken)
-        pool.query(`select * from customers where email='${customer_email}'`, (err, result) => {
+    /*  passport.use('googleToken', new GooglePlusTokenStrategy({
+          clientID: "265635454782-8tkv7on6vmqrvotjndr1h5qjcl374ir4.apps.googleusercontent.com",
+          clientSecret: "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",
+          callbackURL: "http://localhost:5000/google/callback"
+      }, async (accessToken, refreshToken, profile, done) => {
+          // Will have to query the database // 
+          customer_email = profile.emails[0].value;
+          console.log(accessToken)
+          pool.query(`select * from customers where email='${customer_email}'`, (err, result) => {
+  
+              if (err) { throw err }
+  
+              // If the customer is in the database
+              if (result.rows.length > 0) {
+  
+                  const customer = result.rows[0];
+                  return done(null, customer, accessToken)
+              }
+              // If the customer is not in the database
+              else {
+  
+                  return done(null, false);
+              }
+          });
+  
+  
+      })); */
 
-            if (err) { throw err }
+    // Google Oauth strategy
 
-            // If the customer is in the database
-            if (result.rows.length > 0) {
+    passport.use(new GoogleStrategy({
+        clientID: "261273528668-u49b84sr0r8qjerk414jpk1u0odsveoh.apps.googleusercontent.com",
+        clientSecret: "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",
+        callbackURL: "http://localhost:5000/auth/google/callback",
+        passReqToCallback: true
+    }, (request, accessToken, refreshToken, profile, done) => {
+        console.log(profile)
+        return done(null, profile)
+    }))
 
-                const customer = result.rows[0];
-                return done(null, customer, accessToken)
-            }
-            // If the customer is not in the database
-            else {
-
-                return done(null, false);
-            }
-        });
-
-
-    }));
-
-    /* Google Oauth strategy
-
- passport.use(new GoogleStrategy({
-     clientID: "617438740810-n81dqm65e7b39sh10tr7fufomrpigf19.apps.googleusercontent.com",
-     clientSecret: "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",
-     callbackURL: "http://localhost:5000/google/callback",
-     passReqToCallback: true
- }, (request, accessToken, refreshToken, profile, done) => {
-     console.log(profile)
-     return done(null, profile)
- }))
- */
 
 }
 

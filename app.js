@@ -340,7 +340,7 @@ app.post('/payment', cors(), async (req, res) => {
 
 /// Google plus token
 
-app.post('/google', passport.authenticate('googleToken', { session: true }));
+/*app.post('/google', passport.authenticate('googleToken', { session: true }));
 
 app.post('/google/callback', passport.authenticate('googleToken'), function (req, res) {
     console.log(req.body.access_token)
@@ -353,19 +353,17 @@ app.post('/google/callback', passport.authenticate('googleToken'), function (req
         res.send({ loggedIn: false });
     }
 
+}); */
+
+// Google oauth
+
+app.get('/auth/google', passport.authenticate('google', { scope: ['profile'] }));
+
+app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/notFound' }), (req, res) => {
+    res.send({ loggedIn: true, customer: req.user });
 });
 
-/* Google oauth
 
-app.get('/google', passport.authenticate('google', { scope: ['profile'] }), (req, res) => {
-    console.log(req.user)
-})
-
-app.get('/google/callback', passport.authenticate('google', { failureRedirect: '/notFound' }, (req, res) => {
-    res.send({ loggedIn: true, customer: req.user });
-}));
-
-*/
 
 
 app.listen(PORT, (error) => {
