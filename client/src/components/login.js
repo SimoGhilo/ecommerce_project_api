@@ -4,8 +4,11 @@ import { useNavigate } from 'react-router-dom';
 import bcrypt from 'bcryptjs'
 import GoogleLogin from 'react-google-login';
 
+
+
 import { useDispatch, useSelector } from 'react-redux';
 import { setLoginStatus } from '../slice/loginSlice';
+
 
 
 
@@ -86,7 +89,27 @@ const Login = () => {
     }
 
 
-    /////////////   Google Login   //////////////
+    /////////////   Google Token Login   //////////////
+
+    /// Testing below
+    /*  async function googleLogin1() {
+          const url = 'http://localhost:5000/google';
+          let result = await fetch(url, {
+              method: 'GET',
+              headers: {
+                  'Content-type': 'application/json',
+                  'Accept': 'application/json',
+                  'Access-Control-Allow-Origin': 'http://localhost:5000'
+              },
+              mode: 'cors',
+              cache: 'no-cache',
+              credentials: 'include',
+  
+  
+          })
+  
+          console.log(result)
+      } */
 
     async function googleLogin() {
         const url = 'http://localhost:5000/google/callback';
@@ -101,17 +124,45 @@ const Login = () => {
             mode: 'cors',
             cache: 'no-cache',
             credentials: 'include',
-            body: JSON.stringify({ access_token: "ya29.a0AX9GBdW_GhztFmnXn-UxPY9CYeua7E-4OnxFyMbTSvDHmx13CF1xp1Db9Rs9iQIxHYkF8BOh19pjz7ZRgWDxFjVr0TyPkUf87jS6wiNuXg7B5t7akhi2lr7zdjxCTylwE8wHX5zbHw80vc_Wm-30SOoYhMrWaCgYKAaYSARMSFQHUCsbCY87x4ZM6q82EhHc5gzdW2w0163" })
+            body: JSON.stringify({ access_token: "ya29.a0AX9GBdWi4JfSf5FHvDRMuoUSZPLmlmplJbSbluQyVYoNd0xEat4HOa5_xejF-GtIrXVANiWu5jMXJPyd84RCmsjckTbc1GABaWJ6FyaWyRKiUZ85YzJzJtLJHRuO-RukW-ksxgWx3WrcGOYwQvZGAglHPZjAkd8aCgYKAXgSAQASFQHUCsbCuZGvyVH_pMcLsLZX90hLqg0166" })
 
         },)
 
+        if (result.status === 200) {
+            //    console.log('logged in');
+            const data = await result.json();
+            // set state to logged in
+            console.log(data)
+            const user = { customer_id: data.customer.customer_id, email: data.customer.email, name: data.customer.customer_name, loggedIn: data.loggedIn }
+            setLoggedIn(data.loggedIn);
+            dispatch(setLoginStatus(user))
+        }
 
-        // result = result.json();
-        console.log(result)
-        return result;
+
         /// Working on google log in here *******
 
     }
+
+    /* Google Oauth login
+
+  async function handleGoogleLogin() {
+      const url = 'http://localhost:5000/google';
+      let response = await fetch(url, {
+          method: 'GET',
+          headers: {
+              'Content-type': 'application/json',
+              'Accept': 'application/json',
+              'Access-Control-Allow-Origin': '*'
+          },
+          mode: 'cors',
+          cache: 'no-cache',
+          credentials: 'include',
+
+      })
+      console.log(response)
+  }
+
+  */
 
 
 
@@ -134,20 +185,6 @@ const Login = () => {
                 </div>
                 <button className="lower" type="submit" onClick={login}>Login</button>
                 <br />
-                { /* <div id="signinButton">
-                    <span class="g-signin"
-                        data-scope="https://www.googleapis.com/auth/plus.login"
-                        data-clientid="265635454782-8tkv7on6vmqrvotjndr1h5qjcl374ir4.apps.googleusercontent.com"
-                        data-redirecturi="postmessage"
-                        data-accesstype="offline"
-                        data-cookiepolicy="single_host_origin"
-                        data-callback="signInCallback">
-                    </span>
-                </div>
-                <div id="result">
-                    <img className='google' style={googleStyle} src="https://cdn-icons-png.flaticon.com/512/888/888853.png" onClick={googleLogin} />
-    </div> */}
-                {/*<div id='SignInDiv'></div>*/}
                 <img className='google' style={googleStyle} src="https://cdn-icons-png.flaticon.com/512/888/888853.png" onClick={googleLogin} />
                 <br />
                 <hr />

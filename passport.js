@@ -70,11 +70,11 @@ function initialize(passport) {
         })
     })
 
-    // Google strategy
+    // Google plus token strategy
 
     passport.use('googleToken', new GooglePlusTokenStrategy({
         clientID: "265635454782-8tkv7on6vmqrvotjndr1h5qjcl374ir4.apps.googleusercontent.com",
-        clientSecret: "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 ",
+        clientSecret: "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",
         callbackURL: "http://localhost:5000/google/callback"
     }, async (accessToken, refreshToken, profile, done) => {
         // Will have to query the database // 
@@ -100,6 +100,18 @@ function initialize(passport) {
 
     }));
 
+    /* Google Oauth strategy
+
+ passport.use(new GoogleStrategy({
+     clientID: "617438740810-n81dqm65e7b39sh10tr7fufomrpigf19.apps.googleusercontent.com",
+     clientSecret: "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",
+     callbackURL: "http://localhost:5000/google/callback",
+     passReqToCallback: true
+ }, (request, accessToken, refreshToken, profile, done) => {
+     console.log(profile)
+     return done(null, profile)
+ }))
+ */
 
 }
 

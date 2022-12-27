@@ -1,4 +1,5 @@
 const express = require('express');
+const axios = require('axios');
 
 /// Swagger imports
 var swaggerJSDoc = require('swagger-jsdoc');
@@ -337,19 +338,34 @@ app.post('/payment', cors(), async (req, res) => {
 })
 
 
-/// Google login
+/// Google plus token
 
 app.post('/google', passport.authenticate('googleToken', { session: true }));
 
 app.post('/google/callback', passport.authenticate('googleToken'), function (req, res) {
+    console.log(req.body.access_token)
+
+    // Stuck on how the access_token is generated in the client side ?
     // Return user back to client
     if (req.user) {
-        res.send({ loggedIn: true, customer: req.session.passport.user, access_token: req.session.passport.accessToken });
+        res.send({ loggedIn: true, customer: req.user });
     } else {
         res.send({ loggedIn: false });
     }
 
 });
+
+/* Google oauth
+
+app.get('/google', passport.authenticate('google', { scope: ['profile'] }), (req, res) => {
+    console.log(req.user)
+})
+
+app.get('/google/callback', passport.authenticate('google', { failureRedirect: '/notFound' }, (req, res) => {
+    res.send({ loggedIn: true, customer: req.user });
+}));
+
+*/
 
 
 app.listen(PORT, (error) => {
