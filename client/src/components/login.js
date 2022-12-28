@@ -12,6 +12,7 @@ import { setLoginStatus } from '../slice/loginSlice';
 
 
 
+
 // helper functions & styles
 
 const h1Styles = {
@@ -126,23 +127,26 @@ const Login = () => {
 
     async function handleGoogleLogin() {
         const url = 'http://localhost:5000/auth/google';
-        let response = await fetch(url, {
-            method: 'GET',
-            headers: {
-                'Content-type': 'application/json',
-                'Accept': 'application/json',
-                'Access-Control-Allow-Origin': '*'
-            },
-            mode: 'cors',
-            cache: 'no-cache',
-            credentials: 'include',
+        try {
+            let response = await fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Content-type': 'application/json',
+                    'Accept': 'application/json',
+                    'Access-Control-Allow-Origin': 'http://localhost:5000',
+                },
+                mode: 'cors',
+                cache: 'no-cache',
+                credentials: 'include',
 
-        })
-        console.log(response)
+            })
+            console.log(response)
+        } catch (error) {
+            console.log(error);
+        }
+
+
     }
-
-
-
 
 
 
@@ -166,6 +170,9 @@ const Login = () => {
                 <br />
                 <img className='google' style={googleStyle} src="https://cdn-icons-png.flaticon.com/512/888/888853.png" /*onClick={googleLogin} */ onClick={handleGoogleLogin} />
                 <br />
+                <form action="http://localhost:5000/auth/google" method="GET" target="_blank" /* onSubmit={getProfile}*/>
+                    <input type="submit" value="Press to log in" />
+                </form>
                 <hr />
                 <p>Copyright 2022 E-Market</p>
             </div>

@@ -97,8 +97,9 @@ app.use(bodyParser.json());
 
 app.use(cors({
     origin: 'http://localhost:3000',
-    credentials: true
+    credentials: true,
 }));
+
 
 
 app.use(cookieParser('secret'))
@@ -357,10 +358,12 @@ app.post('/google/callback', passport.authenticate('googleToken'), function (req
 
 // Google oauth
 
-app.get('/auth/google', passport.authenticate('google', { scope: ['profile'] }));
+app.get('/auth/google', passport.authenticate('google', { scope: ['email'] }));
 
 app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/notFound' }), (req, res) => {
-    res.send({ loggedIn: true, customer: req.user });
+    res.send({ loggedIn: true, customer: req.user }); /// How to send this information to the frontend?
+    //res.redirect('/products');
+
 });
 
 

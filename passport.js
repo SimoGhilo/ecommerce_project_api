@@ -108,8 +108,25 @@ function initialize(passport) {
         callbackURL: "http://localhost:5000/auth/google/callback",
         passReqToCallback: true
     }, (request, accessToken, refreshToken, profile, done) => {
-        console.log(profile)
-        return done(null, profile)
+        customer_email = profile.emails[0].value;
+        console.log(customer_email);
+        pool.query(`select * from customers where email='${customer_email}'`, (err, result) => {
+
+            if (err) { throw err }
+
+            // If the customer is in the database
+            if (result.rows.length > 0) {
+
+                const customer = result.rows[0];
+                return done(null, customer)
+            }
+            // If the customer is not in the database
+            else {
+
+                return done(null, false);
+            }
+        });
+        //  return done(null, profile)
     }))
 
 
