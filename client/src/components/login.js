@@ -170,7 +170,7 @@ const Login = () => {
                 <br />
                 <img className='google' style={googleStyle} src="https://cdn-icons-png.flaticon.com/512/888/888853.png" /*onClick={googleLogin} */ onClick={handleGoogleLogin} />
                 <br />
-                <form action="http://localhost:5000/auth/google" method="GET" target="_blank" /* onSubmit={getProfile}*/>
+                <form action="http://localhost:5000/auth/google" method="GET" /* onSubmit={getProfile}*/>
                     <input type="submit" value="Press to log in" />
                 </form>
                 <hr />

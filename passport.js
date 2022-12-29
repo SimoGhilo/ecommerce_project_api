@@ -122,8 +122,21 @@ function initialize(passport) {
             }
             // If the customer is not in the database
             else {
+                const email = profile.emails[0].value;
+                const customer_name;
+                /// Fix the entries in the database and set credentials for fetch request in cart
+                let query = `insert into customers (customer_name,address,email,customer_password)  values ('${customer_name}','${address}','${email}','')`;
+                console.log(query);
+                pool.query(query, (err, result) => {
+                    if (err) {
+                        return done(null, false);
+                    } else {
+                        const customer = result.rows[0];
+                        return done(null, customer)
+                    }
 
-                return done(null, false);
+                });
+
             }
         });
         //  return done(null, profile)

@@ -14,9 +14,21 @@ const getOrders = async (req, res) => {
 
 const getOrderById = async (req, res) => {
     const id = parseInt(req.params.id);
+
+    const customerId = req.session?.user?.customer_id ?? req?.user?.customer_id;
+    console.log(customerId);
     try {
-        await pool.query(`select * from orders where customer_id=${id.toString()}`, (err, result) => {
-            res.status(200).json(result.rows)
+        await pool.query(`select * from orders where customer_id=${customerId}`, (err, result) => {
+
+            if (err) {
+                console.log(err.message);
+                res.status(500).message(err.message);
+            } else {
+                res.status(200).json(result.rows)
+            }
+
+
+
         });
     } catch (err) {
         console.log(err.message);

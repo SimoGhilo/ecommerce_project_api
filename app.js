@@ -75,7 +75,7 @@ app.use(session({
     saveUninitialized: false,
     cookie: {
         expires: 60 * 60 * 24,
-
+        sameSite: 'lax',
     }
 }));
 
@@ -361,8 +361,9 @@ app.post('/google/callback', passport.authenticate('googleToken'), function (req
 app.get('/auth/google', passport.authenticate('google', { scope: ['email'] }));
 
 app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/notFound' }), (req, res) => {
-    res.send({ loggedIn: true, customer: req.user }); /// How to send this information to the frontend?
-    //res.redirect('/products');
+    //res.send({ loggedIn: true, customer: req.user }); /// How to send this information to the frontend?
+    console.log('callback google user', req.user);
+    res.redirect('http://localhost:3000/products');
 
 });
 
