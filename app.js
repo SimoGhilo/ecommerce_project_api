@@ -262,7 +262,7 @@ app.post('/login', passport.authenticate('local', {
 
 
 app.get('/isLoggedIn', (req, res) => {
-    console.log('In isLoggedIn', req.user);
+    //console.log('In isLoggedIn', req.user);
     if (req.session?.passport?.user) {
 
         res.send({ loggedIn: true, user: req.session.passport.user });
@@ -360,9 +360,9 @@ app.post('/google/callback', passport.authenticate('googleToken'), function (req
 
 app.get('/auth/google', passport.authenticate('google', { scope: ['email'] }));
 
-app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/notFound' }), (req, res) => {
+app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: 'http://localhost:3000/products' }), (req, res) => {
     //res.send({ loggedIn: true, customer: req.user }); /// How to send this information to the frontend?
-    console.log('callback google user', req.user);
+    // console.log('callback google user', req.user);
     res.redirect('http://localhost:3000/products');
 
 });

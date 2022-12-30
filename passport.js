@@ -123,15 +123,20 @@ function initialize(passport) {
             // If the customer is not in the database
             else {
                 const email = profile.emails[0].value;
-                const customer_name;
+                console.log(profile.name)
+                const customer_name = (profile.name.givenName) ? profile.name.givenName : '';
+                const address = '';
+                const customer_password = '';
                 /// Fix the entries in the database and set credentials for fetch request in cart
-                let query = `insert into customers (customer_name,address,email,customer_password)  values ('${customer_name}','${address}','${email}','')`;
-                console.log(query);
+                let query = `insert into customers (customer_name,address,email,customer_password)  values ('${customer_name}','${address}','${email}','${customer_password}')`;
+                // console.log(query);
                 pool.query(query, (err, result) => {
                     if (err) {
                         return done(null, false);
                     } else {
+                        console.log(result);
                         const customer = result.rows[0];
+                        console.log(customer);
                         return done(null, customer)
                     }
 

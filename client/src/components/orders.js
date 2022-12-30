@@ -6,6 +6,7 @@ import Order from './order';
 const Orders = () => {
     // const dispatch = useDispatch();
     let user = useSelector((state) => state.loginStatus.isLoggedIn);
+    // console.log(user)
     const [orders, setOrders] = useState([]);
     console.log(orders);
 

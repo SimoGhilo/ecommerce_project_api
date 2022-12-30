@@ -43,6 +43,9 @@ const Product = (props) => {
                 'Content-type': 'application/json',
                 'Accept': 'application/json'
             },
+            mode: 'cors',
+            cache: 'no-cache',
+            credentials: 'include',
             body: JSON.stringify(object)
 
         })

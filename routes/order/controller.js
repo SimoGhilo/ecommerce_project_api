@@ -22,7 +22,7 @@ const getOrderById = async (req, res) => {
 
             if (err) {
                 console.log(err.message);
-                res.status(500).message(err.message);
+                res.status(500);
             } else {
                 res.status(200).json(result.rows)
             }

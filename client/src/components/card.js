@@ -21,10 +21,10 @@ const getStripe = () => {
 
 // helper function & styles 
 
-function titleCase(string) {
+/*function titleCase(string) {
     return string[0].toUpperCase() + string.slice(1).toLowerCase();
 }
-
+*/
 
 const Card = (props) => {
 
@@ -206,7 +206,7 @@ const Card = (props) => {
 
     return (
         <>
-            <p>{titleCase(name)}</p>
+            <p>{/*titleCase(name)*/ name}</p>
             <img className='image' src={paths[props.name]} />
             <p>Quantity:</p>
             <p><button style={buttonAmountStyle} onClick={useHandleIncrement}>+</button>{toggleQuantity}<button style={buttonAmountStyle} onClick={useHandleDecrement}>-</button></p>
