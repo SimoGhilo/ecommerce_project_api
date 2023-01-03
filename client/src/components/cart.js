@@ -15,7 +15,16 @@ const Cart = () => {
 
 
     useEffect(() => {
-        fetch('http://localhost:5000/carts').then((response) => {
+        fetch('http://localhost:5000/carts', {
+            method: 'GET',
+            headers: {
+                'Content-type': 'application/json',
+                'Accept': 'application/json'
+            },
+            mode: 'cors',
+            cache: 'no-cache',
+            credentials: 'include'
+        }).then((response) => {
             response.json().then((data) => {
                 setCarts(data);
             })

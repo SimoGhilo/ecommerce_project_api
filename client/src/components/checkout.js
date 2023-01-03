@@ -8,9 +8,19 @@ const Checkout = () => {
     let user = useSelector((state) => state.loginStatus.isLoggedIn);
     const [orders, setOrders] = useState([]);
     console.log(orders);
+    console.log(user.customer_id)
 
     useEffect(() => {
-        fetch('http://localhost:5000/orders/' + user.customer_id).then((response) => {
+        fetch('http://localhost:5000/orders/' + user.customer_id, {
+            method: 'GET',
+            headers: {
+                'Content-type': 'application/json',
+                'Accept': 'application/json'
+            },
+            mode: 'cors',
+            cache: 'no-cache',
+            credentials: 'include'
+        }).then((response) => {
             response.json().then((data) => {
                 setOrders(data);
             });

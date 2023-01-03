@@ -15,6 +15,7 @@ const Dashboard = () => {
 
     // redux state
     let user = useSelector((state) => state.loginStatus.isLoggedIn);
+    console.log('In dashboard, checking redux state:', user)
 
 
     return (

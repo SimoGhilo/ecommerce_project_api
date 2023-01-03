@@ -32,12 +32,12 @@ const createCart = (req, res) => {
     const { quantity } = req.body
     const { customer_id } = req.body  /// Error here
 
+    const customerId = req.session?.user?.customer_id ?? req?.user?.customer_id;
+    console.log('printing customer id in controller', customerId);  /// No session data here ***** ?
 
-    //console.log(quantity, 'quantity');
-    //console.log(cart_id, customer_id, 'cart_id', 'customer_id')
-    // console.log(product_id, 'product_id')
+
     try {
-        pool.query(`insert into cart (cart_id,product_id,quantity,customer_id) values (${cart_id},${product_id},${quantity},${customer_id})`, (err, result) => {
+        pool.query(`insert into cart (cart_id,product_id,quantity,customer_id) values (${cart_id},${product_id},${quantity},${customerId})`, (err, result) => {
             res.status(200).json(result.rows)
         });
     } catch (err) {

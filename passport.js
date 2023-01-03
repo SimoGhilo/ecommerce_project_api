@@ -102,50 +102,80 @@ function initialize(passport) {
 
     // Google Oauth strategy
 
+    /*  passport.use(new GoogleStrategy({
+          clientID: "261273528668-u49b84sr0r8qjerk414jpk1u0odsveoh.apps.googleusercontent.com",
+          clientSecret: "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",
+          callbackURL: "http://localhost:5000/auth/google/callback",
+          passReqToCallback: true
+      }, (request, accessToken, refreshToken, profile, done) => {
+          let customer_email = profile.emails[0].value;
+          console.log(customer_email);
+          pool.query(`select * from customers where email='${customer_email}'`, (err, result) => {
+  
+              if (err) { throw err }
+  
+              // If the customer is in the database
+              if (result.rows.length > 0) {
+  
+                  const customer = result.rows[0];
+                  return done(null, customer)
+              }
+              // If the customer is not in the database
+              else {
+                  const email = profile.emails[0].value;
+                  console.log(profile.name)
+                  const customer_name = (profile.name.givenName) ? profile.name.givenName : '';
+                  const address = '';
+                  const customer_password = '';
+                  /// Fix the entries in the database and set credentials for fetch request in cart
+                  let query = `insert into customers (customer_name,address,email,customer_password)  values ('${customer_name}','${address}','${email}','${customer_password}')`;
+                  // console.log(query);
+                  pool.query(query, (err, result) => {
+                      if (err) {
+                          return done(null, false);
+                      } else {
+                          console.log('In passport, printing the result of the query', result);
+                          const customer = result.rows[0];
+                          console.log(customer);
+                          return done(null, customer)
+                      }
+  
+                  });
+  
+              }
+          });
+          //  return done(null, profile)
+      })) */
+
     passport.use(new GoogleStrategy({
         clientID: "261273528668-u49b84sr0r8qjerk414jpk1u0odsveoh.apps.googleusercontent.com",
         clientSecret: "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",
         callbackURL: "http://localhost:5000/auth/google/callback",
         passReqToCallback: true
-    }, (request, accessToken, refreshToken, profile, done) => {
-        customer_email = profile.emails[0].value;
-        console.log(customer_email);
-        pool.query(`select * from customers where email='${customer_email}'`, (err, result) => {
+    }, async (request, accessToken, refreshToken, profile, done) => {
+        try {
+            const customerEmail = profile.emails[0].value;
+            const result = await pool.query(`SELECT * FROM customers WHERE email=$1`, [customerEmail]);
 
-            if (err) { throw err }
-
-            // If the customer is in the database
             if (result.rows.length > 0) {
-
                 const customer = result.rows[0];
-                return done(null, customer)
-            }
-            // If the customer is not in the database
-            else {
+                return done(null, customer);
+            } else {
                 const email = profile.emails[0].value;
-                console.log(profile.name)
-                const customer_name = (profile.name.givenName) ? profile.name.givenName : '';
+                const customerName = (profile.name.givenName) ? profile.name.givenName : '';
                 const address = '';
-                const customer_password = '';
-                /// Fix the entries in the database and set credentials for fetch request in cart
-                let query = `insert into customers (customer_name,address,email,customer_password)  values ('${customer_name}','${address}','${email}','${customer_password}')`;
-                // console.log(query);
-                pool.query(query, (err, result) => {
-                    if (err) {
-                        return done(null, false);
-                    } else {
-                        console.log(result);
-                        const customer = result.rows[0];
-                        console.log(customer);
-                        return done(null, customer)
-                    }
-
-                });
-
+                const customerPassword = '';
+                const query = `INSERT INTO customers (customer_name, address, email, customer_password) VALUES ($1, $2, $3, $4)`;
+                const values = [customerName, address, email, customerPassword];
+                const insertResult = await pool.query(query, values);
+                const customer = insertResult.rows[0];
+                return done(null, customer);
             }
-        });
-        //  return done(null, profile)
-    }))
+        } catch (error) {
+            console.error(error);
+            return done(error);
+        }
+    }));
 
 
 }
