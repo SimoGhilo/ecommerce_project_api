@@ -203,6 +203,7 @@ app.post('/carts/:id/checkout', (req, res) => {
 
     let { id } = req.params;
     let { customer_id, product_id, quantity, price } = req.body;
+    const customerId = req.session?.user?.customer_id ?? req?.user?.customer_id;
 
     console.log(product_id, customer_id, 'quantity', quantity, id, 'price', price)
 
@@ -214,8 +215,9 @@ app.post('/carts/:id/checkout', (req, res) => {
 
         // if ther is a cart
         if (cart.length > 0) {
-
-            pool.query(`insert into orders(customer_id,amount,order_status,cart_id,product_id,quantity) values(${customer_id},${price},'fulfilled',${id.toString()},${product_id},${quantity})`, (err, result) => {
+            let query = `insert into orders(customer_id,amount,order_status,cart_id,product_id,quantity) values(${customerId},${price},'fulfilled',${id.toString()},${product_id},${quantity}`;
+            console.log(query)
+            pool.query(query, (err, result) => {
                 if (err) throw err
 
                 res.status(200).send(result.rows);

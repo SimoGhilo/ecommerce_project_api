@@ -9,7 +9,16 @@ const Products = () => {
     let [products, setProducts] = useState([])
 
     useEffect(() => {
-        fetch('http://localhost:5000/products').then((response) => {
+        fetch('http://localhost:5000/products', {
+            method: 'GET',
+            headers: {
+                'Content-type': 'application/json',
+                'Accept': 'application/json'
+            },
+            mode: 'cors',
+            cache: 'no-cache',
+            credentials: 'include',
+        }).then((response) => {
             response.json().then((data) => {
                 setProducts(data);
             });

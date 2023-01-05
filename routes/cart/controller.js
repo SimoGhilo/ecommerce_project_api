@@ -1,9 +1,15 @@
 const pool = require('../../database');
 
 const getCarts = async (req, res) => {
+    const customerId = req.session?.user?.customer_id ?? req?.user?.customer_id;
     try {
-        await pool.query('SELECT * FROM cart INNER JOIN products ON cart.product_id = products.id; ', (err, result) => {
-            res.status(200).json(result.rows);
+        let query = `SELECT * FROM cart INNER JOIN products ON cart.product_id = products.id WHERE cart.customer_id=${customerId}`;
+        console.log(query);
+        await pool.query(query, (err, result) => {
+            if (err) { console.log(err.message) } else {
+                res.status(200).json(result.rows);
+            }
+
         });
     } catch (err) {
         console.log(err.message);
@@ -34,11 +40,16 @@ const createCart = (req, res) => {
 
     const customerId = req.session?.user?.customer_id ?? req?.user?.customer_id;
     console.log('printing customer id in controller', customerId);  /// No session data here ***** ?
-
+    console.log('Session here:', req.session.passport)
+    console.log('User here:', req.user)
 
     try {
-        pool.query(`insert into cart (cart_id,product_id,quantity,customer_id) values (${cart_id},${product_id},${quantity},${customerId})`, (err, result) => {
-            res.status(200).json(result.rows)
+        let query = `insert into cart (cart_id,product_id,quantity,customer_id) values (${cart_id},${product_id},${quantity},${customerId})`;
+        console.log(query);
+        pool.query(query, (err, result) => {
+            if (err) { console.error(err.message) } else {
+                res.status(200).json(result.rows)
+            }
         });
     } catch (err) {
         console.log(err.message);

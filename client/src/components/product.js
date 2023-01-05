@@ -30,7 +30,7 @@ const Product = (props) => {
     }
 
     async function createCart() {
-        const url = 'http://www.localhost:5000/carts';
+        const url = 'http://localhost:5000/carts';
         const object = {
             cart_id: ((Math.random()) * 100 + (Math.random()) * 100) / 2,
             product_id: props.product_id,

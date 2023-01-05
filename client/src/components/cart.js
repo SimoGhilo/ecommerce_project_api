@@ -15,21 +15,26 @@ const Cart = () => {
 
 
     useEffect(() => {
-        fetch('http://localhost:5000/carts', {
-            method: 'GET',
-            headers: {
-                'Content-type': 'application/json',
-                'Accept': 'application/json'
-            },
-            mode: 'cors',
-            cache: 'no-cache',
-            credentials: 'include'
-        }).then((response) => {
-            response.json().then((data) => {
-                setCarts(data);
+        if (user) {
+            fetch('http://localhost:5000/carts', {
+                method: 'GET',
+                headers: {
+                    'Content-type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                mode: 'cors',
+                cache: 'no-cache',
+                credentials: 'include'
+            }).then((response) => {
+                response.json().then((data) => {
+                    setCarts(data);
+                })
             })
-        })
-    }, [refetch]);
+        } else {
+            console.log('error')
+        }
+    }
+        , [refetch]);
 
 
     console.log(carts.map((cart) => { return cart.customer_id }));
@@ -42,7 +47,7 @@ const Cart = () => {
                 {
 
                     carts.map((cart) => (
-                        user.customer_id === cart.customer_id && <div key={cart.cart_id}>
+                        <div key={cart.cart_id}>
                             <div>
                                 <div className='cart' >
                                     <Card setReFetch={setReFetch} refetch={refetch} quantity={cart.quantity} cart_id={cart.cart_id} product_id={cart.product_id} name={cart.name} price={cart.price} customer_id={cart.customer_id} />
