@@ -183,6 +183,7 @@ const Card = (props) => {
                     'content-type': 'application/json',
                     'accept': 'application/json'
                 },
+                body: JSON.stringify(object),
                 mode: 'cors',
                 cache: 'no-cache',
                 credentials: 'include'

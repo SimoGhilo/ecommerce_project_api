@@ -162,17 +162,21 @@ function initialize(passport) {
                 return done(null, customer);
             } else {
                 const email = profile.emails[0].value;
-                const customerName = (profile.name.givenName) ? profile.name.givenName : '';
-                const address = '';
-                const customerPassword = '';
-                const query = `INSERT INTO customers (customer_name, address, email, customer_password) VALUES ($1, $2, $3, $4)`;
+                const customerName = (profile.name.givenName) ? profile.name.givenName : 'customer_name';
+                const address = 'aaaaaaaaaaaaa';
+                const customerPassword = 'bbbbbbbbbbbbbbbbbbbb';
+
+                const query = `INSERT INTO customers (customer_name, address, email, customer_password) VALUES (${customerName}, ${address}, ${email}, ${customerPassword})`;
                 const values = [customerName, address, email, customerPassword];
-                const insertResult = await pool.query(query, values);
+
+                const insertResult = await pool.query(query);
+                console.log('Look at me', email, customerName, address, customerPassword);
                 const customer = insertResult.rows[0];
+                console.log('customer inserted', insertResult)
                 return done(null, customer);
             }
         } catch (error) {
-            console.error(error);
+            console.error("errpr", error);
             return done(error);
         }
     }));

@@ -11,7 +11,7 @@ const Orders = () => {
     console.log(orders);
 
     useEffect(() => {
-        fetch('http://localhost:5000/orders', {
+        fetch(`http://localhost:5000/orders/${user?.customer_id}`, {
             method: 'GET',
             headers: {
                 'Content-type': 'application/json',
@@ -26,7 +26,7 @@ const Orders = () => {
                 setOrders(data);
             });
         });
-    }, [])
+    }, [user])
 
 
     return (

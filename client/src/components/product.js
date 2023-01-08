@@ -37,7 +37,7 @@ const Product = (props) => {
             quantity: 1,
             customer_id: user.customer_id,
         }
-        const result = await fetch(url, {
+        let result = await fetch(url, {
             method: 'POST',
             headers: {
                 'Content-type': 'application/json',
