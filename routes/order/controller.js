@@ -43,8 +43,9 @@ const createOrder = (req, res) => {
     const { customer_id } = req.body
     const { amount } = req.body
     const { order_status } = req.body
+    const customerId = req.session?.user?.customer_id ?? req?.user?.customer_id;
     try {
-        pool.query(`insert into orders (id,customer_id,amount,order_status) values (${id},${customer_id},${amount},'${order_status}')`, (err, result) => {
+        pool.query(`insert into orders (id,customer_id,amount,order_status) values (${id},${customerId},${amount},'${order_status}')`, (err, result) => {
             res.status(200).json(result.rows)
         });
     } catch (err) {
