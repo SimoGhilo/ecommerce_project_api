@@ -166,13 +166,13 @@ function initialize(passport) {
                 const address = 'aaaaaaaaaaaaa';
                 const customerPassword = 'bbbbbbbbbbbbbbbbbbbb';
 
-                const query = `INSERT INTO customers (customer_name, address, email, customer_password) VALUES (${customerName}, ${address}, ${email}, ${customerPassword})`;
+                const query = `INSERT INTO customers (customer_name, address, email, customer_password) VALUES ('${customerName}', '${address}', '${email}', '${customerPassword}')`;
                 const values = [customerName, address, email, customerPassword];
-
+                console.log('Query here', query);
                 const insertResult = await pool.query(query);
                 console.log('Look at me', email, customerName, address, customerPassword);
                 const customer = insertResult.rows[0];
-                console.log('customer inserted', insertResult)
+                console.log('customer inserted', customer)
                 return done(null, customer);
             }
         } catch (error) {

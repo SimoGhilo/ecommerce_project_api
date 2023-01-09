@@ -18,9 +18,10 @@ const createCustomer = (req, res) => {
     const { address } = req.body
     const { email } = req.body
     const { customer_password } = req.body
+
     try {
         let query = `insert into customers (customer_name,address,email,customer_password)  values ('${customer_name}','${address}','${email}','${customer_password}')`;
-        console.log(query);
+        //  console.log('Look at the query', query);
         pool.query(query, (err, result) => {
             if (err) {
                 console.error(err.message);
