@@ -173,15 +173,31 @@ function initialize(passport) {
                 console.log('Look at me', email, customerName, address, customerPassword);
                 const customer = insertResult.rows[0];
                 console.log('customer inserted', customer)
-                return done(null, customer); */
+                return done(null, customer); 
                 const query = `INSERT INTO customers (customer_name, address, email, customer_password) VALUES ('${customerName}', '${address}', '${email}', '${customerPassword}')`;
                 pool.query(query, (err, result) => {
                     if (err) { console.log(err); return done(null, false) }
                     else {
+
+                        console.log('result.rows', result.rows[0])
                         const customer = result.rows[0];
+                        console.log('customer', customer)
                         return done(null, customer);
                     }
+                }) */
+                const query = `INSERT INTO customers (customer_name, address, email, customer_password) VALUES ('${customerName}', '${address}', '${email}', '${customerPassword}')`;
+                pool.query(query, (err, result) => {
+                    if (err) { console.log(err); return done(null, false) } else {
+                        pool.query(`select * from customers where email='${email}'`, (err, result) => {
+                            if (err) { console.log(err); return done(null, false) } else {
+                                const customer = result.rows[0];
+                                return done(null, customer)
+                            }
+                        })
+                    }
                 })
+
+
 
             }
         } catch (error) {

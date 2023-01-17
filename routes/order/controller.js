@@ -1,8 +1,9 @@
 const pool = require('../../database');
 
 const getOrders = async (req, res) => {
+    const customerId = req.session?.user?.customer_id ?? req?.user?.customer_id;
     try {
-        await pool.query('SELECT * FROM orders INNER JOIN order_details ON orders.cart_id = order_details.cart_id', (err, result) => {
+        await pool.query(`SELECT * FROM orders INNER JOIN order_details ON orders.cart_id = order_details.cart_id where customer_id='${customerId}'`, (err, result) => {
             res.status(200).json(result.rows);
         });
     } catch (err) {
