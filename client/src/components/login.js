@@ -89,65 +89,6 @@ const Login = () => {
 
     }
 
-    //// Google token login
-
-    /*   async function googleLogin() {
-           const url = 'http://localhost:5000/google/callback';
-           //let object = 
-           let result = await fetch(url, {
-               method: 'POST',
-               headers: {
-                   'Content-type': 'application/json',
-                   'Accept': 'application/json',
-                   'Access-Control-Allow-Origin': 'http://localhost:5000'
-               },
-               mode: 'cors',
-               cache: 'no-cache',
-               credentials: 'include',
-               body: JSON.stringify({ access_token: "ya29.a0AX9GBdWi4JfSf5FHvDRMuoUSZPLmlmplJbSbluQyVYoNd0xEat4HOa5_xejF-GtIrXVANiWu5jMXJPyd84RCmsjckTbc1GABaWJ6FyaWyRKiUZ85YzJzJtLJHRuO-RukW-ksxgWx3WrcGOYwQvZGAglHPZjAkd8aCgYKAXgSAQASFQHUCsbCuZGvyVH_pMcLsLZX90hLqg0166" })
-   
-           },)
-   
-           if (result.status === 200) {
-               //    console.log('logged in');
-               const data = await result.json();
-               // set state to logged in
-               console.log(data)
-               const user = { customer_id: data.customer.customer_id, email: data.customer.email, name: data.customer.customer_name, loggedIn: data.loggedIn }
-               setLoggedIn(data.loggedIn);
-               dispatch(setLoginStatus(user))
-           }
-   
-   
-           /// Working on google log in here *******
-   
-       } */
-
-    // Google Oauth login
-
-    async function handleGoogleLogin() {
-        const url = 'http://localhost:5000/auth/google';
-        try {
-            let response = await fetch(url, {
-                method: 'GET',
-                headers: {
-                    'Content-type': 'application/json',
-                    'Accept': 'application/json',
-                    'Access-Control-Allow-Origin': 'http://localhost:5000',
-                },
-                mode: 'cors',
-                cache: 'no-cache',
-                credentials: 'include',
-
-            })
-            console.log(response)
-        } catch (error) {
-            console.log(error);
-        }
-
-
-    }
-
 
 
     return (
@@ -168,10 +109,10 @@ const Login = () => {
                 </div>
                 <button className="lower" type="submit" onClick={login}>Login</button>
                 <br />
-                <img className='google' style={googleStyle} src="https://cdn-icons-png.flaticon.com/512/888/888853.png" /*onClick={googleLogin} */ onClick={handleGoogleLogin} />
+                <img className='google' style={googleStyle} src="https://cdn-icons-png.flaticon.com/512/888/888853.png" />
                 <br />
-                <form action="http://localhost:5000/auth/google" method="GET" /* onSubmit={getProfile}*/>
-                    <input type="submit" value="Press to log in" />
+                <form action="http://localhost:5000/auth/google" method="GET">
+                    <input className='gmail' type="submit" value="Press to log in" />
                 </form>
                 <hr />
                 <p>Copyright 2022 E-Market</p>
