@@ -1,10 +1,16 @@
-# ecommerce_project_api by Simone Ghilotti
+# ecommerce_project by Simone Ghilotti
 
 
 ## E-Market
 
 PERN app that provides typical functionality found in an ecommerce website.  Customers can register, view products, create a cart, and place/view orders.
 Customers can either log in using the normal log-in functionality provided by the website or they can alternatively log-in via a third party service (Google).
+
+The app is divided into two main brances: 
+
+The client side on one and in the other there is the root folder of the project where you will be able to find all the backend functionalities (server, passport.js, swagger files...).
+
+In the root directory there is also a view folder containing a collection of .ejs files, these are present in the previous ecommerce project as they were providing a minimum interaction when only the API functionalities were implemented(Refer to previous project).
 
 
 ## Running the app
