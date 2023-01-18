@@ -1,10 +1,14 @@
 # ecommerce_project_api by Simone Ghilotti
 
 
-ecommerce-project-api
-Node/Express REST API to provide typical functionality found in an ecommerce website.  Customers can register, view products, create a cart, and place/view orders.
+## E-Market
+
+PERN app that provides typical functionality found in an ecommerce website.  Customers can register, view products, create a cart, and place/view orders.
+Customers can either log in using the normal log-in functionality provided by the website or they can alternatively log-in via a third party service (Google).
+
 
 ## Running the app
+
 To run locally, `npm install`, then `npm run start`
 
 This repo includes an `example.env` file that contains important environment variables for reference.  Make sure to create a `.env` file and include all variables found in the `example.env` file, replacing the example values with those specific to your environment/needs.
@@ -12,6 +16,7 @@ This repo includes an `example.env` file that contains important environment var
 Once the app is running locally, you can access the API at `http://localhost:<your-port>`
 
 ## Testing
+
 Swagger documentation available at `http://localhost:<your-port>/api-docs`
 
 You can use various HTTP clients such as [Postman](https://www.postman.com/) or [Insomnia](https://insomnia.rest/) to make requests to the API endpoints.
