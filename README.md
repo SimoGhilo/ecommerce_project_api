@@ -19,6 +19,8 @@ Swagger documentation available at `http://localhost:<your-port>/api-docs`
 You can use various HTTP clients such as [Postman](https://www.postman.com/) or [Insomnia](https://insomnia.rest/) to make requests to the API endpoints.
 
 
-##Database
+## Testing
 
-Please note that you need to have postbird in order to be able to access the information present in the database file ecommerce.sql in the repository.
+Please note that you need to have postbird installed in order to be able to access the information present in the database.
+
+Please refer to the file ecommerce.sql in the repository.
