@@ -1,6 +1,7 @@
 const express = require('express');
 const axios = require('axios');
 
+
 /// Swagger imports
 var swaggerJSDoc = require('swagger-jsdoc');
 var swaggerUI = require('swagger-ui-express');
@@ -146,11 +147,15 @@ app.get('/carts/:id/checkout', (req, res) => {
 })
 
 
+/// Helper funtion
+
+
 // register and login a customer
 
 app.post('/register', async (req, res) => {
 
     let { customer_name, email, address, password } = req.body;
+
 
 
 

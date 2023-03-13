@@ -20,6 +20,7 @@ const Register = () => {
     const [email, setEmail] = useState('')
     const [address, setAddress] = useState('')
     const [password, setPassword] = useState('')
+    const [error, setError] = useState('')
 
 
     // Redirect customer to login page
@@ -35,28 +36,14 @@ const Register = () => {
         }
     }, [registered]);
 
-    /*async function hashPassword(password) {
-        const hashedPassword = await bcrypt.hash(password, 10);
-        return hashedPassword;
-    }
 
-    async function changePassword(password) {
-        try {
-            const hashedPassword = await hashPassword(password);
-            setPassword(hashedPassword)
-        } catch (error) {
-            console.log(error)
-        }
-        console.log(password)
-    }
+    // helper funtion to validate email
 
-    useEffect(() => {
-
-        changePassword(password);
-
-    }, [password])
-
-    TRIED TO USE BCRYPT BUT DID NOT WORK */
+    const validateEmail = (email) => {
+        return email.match(
+            /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+        );
+    };
 
 
 
@@ -64,6 +51,11 @@ const Register = () => {
     async function register() {
         const hashedPassword = await bcrypt.hash(password, 10);
         const url = 'http://localhost:5000/customers';
+
+        if (!validateEmail(email)) {
+            alert('Please enter a valid email');
+            return;
+        }
         const object = {
             customer_name: name,
             address: address,
@@ -71,33 +63,26 @@ const Register = () => {
             customer_password: hashedPassword
         }
 
-        /*  axios.post(url, object, {
-              headers: {
-                  'Content-type': 'application/json',
-                  'Accept': 'application/json',
-                  'Access-Control-Allow-Origin': 'http://localhost:5000/'
-              },
-          }).catch(err => {
-              console.error(err);
-          }); 
-          
-          EITHER WAY WORKS , AXIOS AND AJAX CALL
-          */
+        try {
+            let result = await fetch(url, {
+                method: 'POST',
+                credentials: 'include',
+                mode: 'cors',
 
-        let result = await fetch(url, {
-            method: 'POST',
-            credentials: 'include',
-            mode: 'cors',
+                headers: {
+                    'Content-type': 'application/json',
+                    'Accept': 'application/json',
+                },
+                body: JSON.stringify(object)
+            });
 
-            headers: {
-                'Content-type': 'application/json',
-                'Accept': 'application/json',
-            },
-            body: JSON.stringify(object)
-        });
+            result = await result.json();
+            setRegistered(true);
 
-        result = await result.json();
-        setRegistered(true);
+        } catch (error) {
+            setError("an error occurred, please try again");
+        }
+
     }
 
     /// Function works, I need to hash the password
@@ -111,6 +96,7 @@ const Register = () => {
                 <br />
                 <h1 style={h1Styles}>Register</h1>
                 <br />
+                <span>{error}</span>
                 <div className='values'>
                     <label for="customer_name" id="forename">Name: </label>
                     <input type="text" name="customer_name" id="customer_name"
